@@ -9,7 +9,7 @@ namespace eCommerceApp.Application.Contracts.Persistence
         /// Add single element
         /// </summary>
         /// <param name="entity"></param>
-        /// <param name="cancellation"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
         Task<TEntity> CreateAsync(TEntity entity, CancellationToken token);
 
