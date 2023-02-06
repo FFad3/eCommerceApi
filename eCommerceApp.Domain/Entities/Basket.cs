@@ -1,7 +1,6 @@
-﻿using eCommerceApp.Domain.Common;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace eCommerceApp.Domain.Entities;
+namespace eCommerceApp.Domain;
 
 [Table("Baskets")]
 public class Basket : EntityBase

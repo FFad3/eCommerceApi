@@ -1,4 +1,4 @@
-﻿namespace eCommerceApp.Domain.Common;
+﻿namespace eCommerceApp.Domain;
 
 public class EntityBase
 {

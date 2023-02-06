@@ -13,8 +13,8 @@
         /// <summary>
         /// Save changes asynchronusly
         /// </summary>
-        /// <param name="cancellation"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        Task<bool> SaveChangesAsync(CancellationToken cancellation);
+        Task<bool> SaveChangesAsync(CancellationToken token);
     }
 }

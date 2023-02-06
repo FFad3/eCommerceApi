@@ -1,4 +1,4 @@
-﻿using eCommerceApp.Domain.Entities;
+﻿using eCommerceApp.Domain;
 
 namespace eCommerceApp.Application.Contracts.Persistence
 {

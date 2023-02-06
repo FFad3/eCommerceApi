@@ -1,4 +1,4 @@
-﻿using eCommerceApp.Domain.Common;
+﻿using eCommerceApp.Domain;
 using System.Linq.Expressions;
 
 namespace eCommerceApp.Application.Contracts.Persistence
@@ -11,7 +11,7 @@ namespace eCommerceApp.Application.Contracts.Persistence
         /// <param name="entity"></param>
         /// <param name="cancellation"></param>
         /// <returns></returns>
-        Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellation);
+        Task<TEntity> CreateAsync(TEntity entity, CancellationToken token);
 
         /// <summary>
         /// Removes entity
@@ -37,32 +37,32 @@ namespace eCommerceApp.Application.Contracts.Persistence
         /// Gets single entity that match predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <param name="cancellation"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        Task<TEntity?> FindSingleAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellation);
+        Task<TEntity?> FindSingleAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken token);
 
         /// <summary>
         /// Gets all entities that match predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <param name="cancellation"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellation);
+        Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken token);
 
         /// <summary>
         /// Counts entites that match predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <param name="cancellation"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        Task<int> CountAllAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellation);
+        Task<int> CountAllAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken token);
 
         /// <summary>
         /// Check for uniqnes
         /// </summary>
         /// <param name="predicate"></param>
-        /// <param name="cancellation"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        Task<bool> IsUniqueAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellation);
+        Task<bool> IsUniqueAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken token);
     }
 }
