@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerceApp.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerceApp.Persistence", "eCommerceApp.Persistence\eCommerceApp.Persistence.csproj", "{B0CD0761-8BFE-4165-AE21-8D606AC1D8AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerceApp.Application", "eCommerceApp.Application\eCommerceApp.Application.csproj", "{66C12144-B0FC-4D57-8E0D-1BF38A656EB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerceApp.Application", "eCommerceApp.Application\eCommerceApp.Application.csproj", "{66C12144-B0FC-4D57-8E0D-1BF38A656EB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerceApp.Domain", "eCommerceApp.Domain\eCommerceApp.Domain.csproj", "{70823914-CC17-4063-8BBC-16F60E6B22D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerceApp.Domain", "eCommerceApp.Domain\eCommerceApp.Domain.csproj", "{70823914-CC17-4063-8BBC-16F60E6B22D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerceApp.Utilities", "eeCommerceApp.Utilities\eCommerceApp.Utilities.csproj", "{221B95E6-6B6B-4860-8043-F9720FE93E80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{70823914-CC17-4063-8BBC-16F60E6B22D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70823914-CC17-4063-8BBC-16F60E6B22D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70823914-CC17-4063-8BBC-16F60E6B22D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{221B95E6-6B6B-4860-8043-F9720FE93E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{221B95E6-6B6B-4860-8043-F9720FE93E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{221B95E6-6B6B-4860-8043-F9720FE93E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{221B95E6-6B6B-4860-8043-F9720FE93E80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
