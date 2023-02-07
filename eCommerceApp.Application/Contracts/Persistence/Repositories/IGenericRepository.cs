@@ -64,5 +64,13 @@ namespace eCommerceApp.Application.Contracts.Persistence
         /// <param name="token"></param>
         /// <returns></returns>
         Task<bool> IsUniqueAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken token);
+
+        /// <summary>
+        /// Check if entity that matches predicate exists
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<bool> IsExist(Expression<Func<TEntity, bool>> predicate, CancellationToken token);
     }
 }

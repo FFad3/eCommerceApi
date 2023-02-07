@@ -1,4 +1,6 @@
-﻿namespace eCommerceApp.Application.Contracts.Persistence
+﻿using eCommerceApp.Application.Contracts.Persistence.Repositories;
+
+namespace eCommerceApp.Application.Contracts.Persistence
 {
     /// <summary>
     /// UnitOfWork for menage repositories
@@ -9,6 +11,11 @@
         /// Gets CategoryRepository
         /// </summary>
         ICategoryRepository Category { get; }
+
+        /// <summary>
+        /// Gets ProductRepository
+        /// </summary>
+        IProductRepository Product { get; }
 
         /// <summary>
         /// Save changes asynchronusly
