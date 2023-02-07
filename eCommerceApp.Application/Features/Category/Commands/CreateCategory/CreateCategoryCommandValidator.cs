@@ -18,7 +18,7 @@ namespace eCommerceApp.Application.Features.Category.Commands.CreateCategory
 
             RuleFor(q => q)
                 .MustAsync(CategoryNameIsUnique)
-                .WithMessage("Leave type already exists");
+                .WithMessage("Category already exists");
         }
 
         private Task<bool> CategoryNameIsUnique(CreateCategoryCommand command, CancellationToken token)
