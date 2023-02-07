@@ -31,7 +31,7 @@ namespace eCommerceApp.Application.Contracts.Persistence
         /// Returns dbSet as IQuerable
         /// </summary>
         /// <returns></returns>
-        IQueryable<TEntity> AsIQuerable();
+        IQueryable<TEntity> AsQuerable();
 
         /// <summary>
         /// Gets single entity that match predicate
