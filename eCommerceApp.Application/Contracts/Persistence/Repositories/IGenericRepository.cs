@@ -18,14 +18,14 @@ namespace eCommerceApp.Application.Contracts.Persistence
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task RemoveAsync(TEntity entity);
+        void Remove(TEntity entity);
 
         /// <summary>
         /// Update entity
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task<TEntity> UpdateAsync(TEntity entity);
+        void Update(TEntity entity);
 
         /// <summary>
         /// Returns dbSet as IQuerable
