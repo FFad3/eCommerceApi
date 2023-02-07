@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using eCommerceApp.Application.PipelineBehaviour;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -9,7 +10,9 @@ namespace eCommerceApp.Application
         public static IServiceCollection IServiceCollection(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddMediatR(Assembly.GetExecutingAssembly())
+                .ConfigureMediatRPipeline();
 
             return services;
         }
