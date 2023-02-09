@@ -18,6 +18,16 @@ namespace eCommerceApp.Application.Contracts.Persistence
         IProductRepository Product { get; }
 
         /// <summary>
+        /// Gets BasketRepository
+        /// </summary>
+        IBasketRepository Basket { get; }
+
+        /// <summary>
+        /// Gets OrderRepository
+        /// </summary>
+        IOrderRepository Order { get; }
+
+        /// <summary>
         /// Save changes asynchronusly
         /// </summary>
         /// <param name="token"></param>
