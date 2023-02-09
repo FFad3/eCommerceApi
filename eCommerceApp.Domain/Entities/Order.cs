@@ -11,6 +11,6 @@ public class Order : EntityBase
     }
 
     public ICollection<OrderItem> Items { get; set; }
-    public DateTime OrderDate { get; set; }
+    public DateTime OrderDate { get; set; } = DateTime.Now;
     public Guid UserId { get; set; }
 }
