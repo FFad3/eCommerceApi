@@ -24,7 +24,7 @@ namespace eCommerceApp.Application.Features.Product.Commands.RemoveProduct
             var productToRemove = await _unitOfWork.Product.FindSingleAsync(x => x.Id == request.Id, cancellationToken);
 
             if (productToRemove == null)
-                throw new NotFoundException(nameof(Domain.Category), request.Id);
+                throw new NotFoundException(nameof(Domain.Product), request.Id);
 
             _unitOfWork.Product.Remove(productToRemove);
 

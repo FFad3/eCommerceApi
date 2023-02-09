@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using eCommerceApp.Application.Contracts.Persistence;
+using eCommerceApp.Application.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -20,7 +21,12 @@ namespace eCommerceApp.Application.Features.Category.Commands.UpdateCategory
 
         public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var categoryToUpdate = _mapper.Map<Domain.Category>(request);
+            var category = await _unitOfWork.Category.FindSingleAsync(x => x.Id == request.Id, cancellationToken);
+
+            if (category == null)
+                throw new NotFoundException(nameof(Domain.Category), request.Id);
+
+            var categoryToUpdate = _mapper.Map(request, category);
 
             _unitOfWork.Category.Update(categoryToUpdate);
 

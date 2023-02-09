@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using eCommerceApp.Application.Contracts.Persistence;
+using eCommerceApp.Application.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -21,6 +22,9 @@ namespace eCommerceApp.Application.Features.Product.Queries.GetSingleProduct
         public async Task<ProductDto> Handle(GetSingleProductQuery request, CancellationToken cancellationToken)
         {
             var entity = await _unitOfWork.Product.FindSingleAsync(x => x.Id == request.Id && !x.IsRemoved, cancellationToken);
+
+            if (entity == null)
+                throw new NotFoundException(nameof(Domain.Product), request.Id);
 
             var result = _mapper.Map<ProductDto>(entity);
 

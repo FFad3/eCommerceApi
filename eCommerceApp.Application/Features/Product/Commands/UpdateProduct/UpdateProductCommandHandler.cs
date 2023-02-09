@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using eCommerceApp.Application.Contracts.Persistence;
+using eCommerceApp.Application.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -20,9 +21,14 @@ namespace eCommerceApp.Application.Features.Product.Commands.UpdateProduct
 
         public async Task<int> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var productToCreate = _mapper.Map<Domain.Product>(request);
+            var product = await _unitOfWork.Product.FindSingleAsync(x => x.Id == request.Id, cancellationToken);
 
-            _unitOfWork.Product.Update(productToCreate);
+            if (product == null)
+                throw new NotFoundException(nameof(Domain.Product), request.Id);
+
+            var productToUpdate = _mapper.Map(request, product);
+
+            _unitOfWork.Product.Update(productToUpdate);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
