@@ -9,6 +9,8 @@ namespace eCommerceApp.Infrastructure
         public static IServiceCollection RegisterApplication(this IServiceCollection services)
         {
             services.AddTransient<IDateTimeService, DateTimeService>();
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+
             return services;
         }
     }
