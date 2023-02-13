@@ -21,9 +21,10 @@ namespace eCommerceApp.Application.Features.Category.Commands.CreateCategory
                 .WithMessage("Category already exists");
         }
 
-        private Task<bool> CategoryNameIsUnique(CreateCategoryCommand command, CancellationToken token)
+        private async Task<bool> CategoryNameIsUnique(CreateCategoryCommand command, CancellationToken token)
         {
-            return _unitOfWork.Category.IsUniqueAsync(x => x.Name == command.Name, token);
+            var result = await _unitOfWork.Category.IsExist(x => x.Name == command.Name, token);
+            return !result;
         }
     }
 }

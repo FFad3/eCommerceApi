@@ -22,9 +22,10 @@ namespace eCommerceApp.Application.Features.Category.Commands.UpdateCategory
                 .WithMessage("Leave type already exists");
         }
 
-        private Task<bool> CategoryNameIsUnique(UpdateCategoryCommand command, CancellationToken token)
+        private async Task<bool> CategoryNameIsUnique(UpdateCategoryCommand command, CancellationToken token)
         {
-            return _unitOfWork.Category.IsUniqueAsync(x => x.Name == command.Name, token);
+            var result = await _unitOfWork.Category.IsExist(x => x.Name == command.Name, token);
+            return !result;
         }
     }
 }

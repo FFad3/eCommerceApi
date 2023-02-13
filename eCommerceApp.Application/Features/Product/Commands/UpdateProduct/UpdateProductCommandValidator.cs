@@ -37,9 +37,10 @@ namespace eCommerceApp.Application.Features.Product.Commands.UpdateProduct
                    .MustAsync(CategoryExists).WithMessage("Category doesnt exists");
         }
 
-        private Task<bool> ProductNameIsUnique(UpdateProductCommand command, CancellationToken token)
+        private async Task<bool> ProductNameIsUnique(UpdateProductCommand command, CancellationToken token)
         {
-            return _unitOfWork.Product.IsUniqueAsync(x => x.Name == command.Name, token);
+            var result = await _unitOfWork.Product.IsExist(x => x.Name == command.Name, token);
+            return !result;
         }
 
         private Task<bool> CategoryExists(UpdateProductCommand command, CancellationToken token)
