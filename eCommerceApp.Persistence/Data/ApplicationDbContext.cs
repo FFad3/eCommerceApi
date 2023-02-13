@@ -6,8 +6,12 @@ namespace eCommerceApp.Persistence.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
+            AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
         {
+            _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

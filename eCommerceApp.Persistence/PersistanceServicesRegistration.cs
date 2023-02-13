@@ -10,6 +10,7 @@ namespace eCommerceApp.Persistence
     {
         public static IServiceCollection RegisterPersistance(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<AuditableEntitySaveChangesInterceptor>();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("eCommerceDb"));
