@@ -2,6 +2,8 @@
 {
     public class OrderDto
     {
+        public int Id { get; set; }
+
         public OrderDto()
         {
             Items = new List<OrderItemDto>();
@@ -12,6 +14,7 @@
 
         public class OrderItemDto
         {
+            public int Id { get; set; }
             public int OrderId { get; set; }
             public int ProductId { get; set; }
             public string ProductName { get; set; } = string.Empty;

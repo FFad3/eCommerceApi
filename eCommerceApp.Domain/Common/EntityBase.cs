@@ -1,6 +1,6 @@
 ﻿namespace eCommerceApp.Domain;
 
-public class EntityBase
+public abstract class EntityBase
 {
     public int Id { get; set; }
     public string CreatedBy { get; set; } = string.Empty;

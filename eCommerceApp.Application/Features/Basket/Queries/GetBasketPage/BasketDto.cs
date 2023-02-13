@@ -2,6 +2,8 @@
 {
     public class BasketDto
     {
+        public int Id { get; set; }
+
         public BasketDto()
         {
             Items = new List<BasketItemDto>();
@@ -11,6 +13,7 @@
 
         public class BasketItemDto
         {
+            public int Id { get; set; }
             public int BasketId { get; set; }
             public int ProductId { get; set; }
             public string ProductName { get; set; } = string.Empty;
