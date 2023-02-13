@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eCommerceApp.Persistence.Data
 {
-    internal class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
+    public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
     {
         private readonly IDateTimeService _dateTimeService;
         private readonly ICurrentUserService _currentUserService;
@@ -30,7 +30,7 @@ namespace eCommerceApp.Persistence.Data
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        public void UpdateEntities(DbContext? context)
+        private void UpdateEntities(DbContext? context)
         {
             if (context is null) return;
 
