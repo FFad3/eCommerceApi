@@ -1,4 +1,5 @@
 ﻿using eCommerceApp.Application.PipelineBehaviour;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -13,6 +14,8 @@ namespace eCommerceApp.Application
 
             services.AddMediatR(Assembly.GetExecutingAssembly())
                 .ConfigurePipeline();
+
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             return services;
         }

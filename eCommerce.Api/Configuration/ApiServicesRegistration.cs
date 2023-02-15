@@ -18,6 +18,8 @@ namespace eCommerce.Api.Configuration
 
             services.AddSwagger();
 
+            services.AddHttpContextAccessor();
+
             services.RegisterApplication();
             services.RegisterInfrastructure();
             services.RegisterPersistance(configuration);
