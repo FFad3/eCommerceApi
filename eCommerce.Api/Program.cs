@@ -1,3 +1,5 @@
+using eCommerce.Api.Configuration;
+
 namespace eCommerce.Api
 {
     public class Program
@@ -6,12 +8,8 @@ namespace eCommerce.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //Configure dependencies
+            builder.Services.RegisterServices(builder.Configuration);
 
             var app = builder.Build();
 
@@ -25,7 +23,6 @@ namespace eCommerce.Api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
