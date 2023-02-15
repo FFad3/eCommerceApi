@@ -12,20 +12,20 @@ namespace eCommerceApp.Persistence
 
         #region Repositories
 
-        private readonly ICategoryRepository? _categoryRepository;
-        private readonly IProductRepository? _productRepository;
-        private readonly IBasketRepository? _basketRepository;
-        private readonly IOrderRepository? _orderRepository;
+        private ICategoryRepository? _categoryRepository;
+        private IProductRepository? _productRepository;
+        private IBasketRepository? _basketRepository;
+        private IOrderRepository? _orderRepository;
 
         #endregion Repositories
 
-        public ICategoryRepository Category => _categoryRepository ?? new CategoryRepository(_dbContext);
+        public ICategoryRepository Category => _categoryRepository ??= new CategoryRepository(_dbContext);
 
-        public IProductRepository Product => _productRepository ?? new ProductRepository(_dbContext);
+        public IProductRepository Product => _productRepository ??= new ProductRepository(_dbContext);
 
-        public IBasketRepository Basket => _basketRepository ?? new BasketRepository(_dbContext);
+        public IBasketRepository Basket => _basketRepository ??= new BasketRepository(_dbContext);
 
-        public IOrderRepository Order => _orderRepository ?? new OrderRepository(_dbContext);
+        public IOrderRepository Order => _orderRepository ??= new OrderRepository(_dbContext);
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {

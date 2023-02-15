@@ -6,7 +6,7 @@ namespace eCommerceApp.Infrastructure
 {
     public static class InfrastructureServicesRegistration
     {
-        public static IServiceCollection RegisterApplication(this IServiceCollection services)
+        public static IServiceCollection RegisterInfrastructure(this IServiceCollection services)
         {
             services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
