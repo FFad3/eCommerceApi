@@ -13,9 +13,9 @@ namespace eCommerceApp.Application.Features.Product.Queries.GetPaginatedProducts
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<GetProductPageQueryHandler> _logger;
 
-        public GetProductPageQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public GetProductPageQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<GetProductPageQueryHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

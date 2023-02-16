@@ -9,9 +9,9 @@ namespace eCommerceApp.Application.Features.Category.Commands.CreateCategory
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<CreateCategoryCommandHandler> _logger;
 
-        public CreateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public CreateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CreateCategoryCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

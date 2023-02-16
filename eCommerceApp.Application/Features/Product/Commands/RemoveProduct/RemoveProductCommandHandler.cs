@@ -10,9 +10,9 @@ namespace eCommerceApp.Application.Features.Product.Commands.RemoveProduct
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<RemoveProductCommandHandler> _logger;
 
-        public RemoveProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public RemoveProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<RemoveProductCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

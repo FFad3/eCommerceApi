@@ -9,9 +9,9 @@ namespace eCommerceApp.Application.Features.Category.Queries.GetSingleCategory
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<GetSingleCategoryQueryHandler> _logger;
 
-        public GetSingleCategoryQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public GetSingleCategoryQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<GetSingleCategoryQueryHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

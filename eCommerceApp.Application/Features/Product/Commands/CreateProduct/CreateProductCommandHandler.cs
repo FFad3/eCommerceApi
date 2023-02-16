@@ -9,9 +9,9 @@ namespace eCommerceApp.Application.Features.Product.Commands.CreateProduct
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<CreateProductCommandHandler> _logger;
 
-        public CreateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public CreateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CreateProductCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

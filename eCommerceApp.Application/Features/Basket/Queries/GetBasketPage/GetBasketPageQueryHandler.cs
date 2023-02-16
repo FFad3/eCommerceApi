@@ -12,9 +12,9 @@ namespace eCommerceApp.Application.Features.Basket.Queries.GetBasketPage
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<GetBasketPageQueryHandler> _logger;
 
-        public GetBasketPageQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public GetBasketPageQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<GetBasketPageQueryHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

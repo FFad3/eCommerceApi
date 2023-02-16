@@ -10,9 +10,9 @@ namespace eCommerceApp.Application.Features.Product.Commands.UpdateProduct
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<UpdateProductCommandHandler> _logger;
 
-        public UpdateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public UpdateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<UpdateProductCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

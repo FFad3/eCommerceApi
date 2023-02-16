@@ -10,9 +10,9 @@ namespace eCommerceApp.Application.Features.Product.Queries.GetSingleProduct
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<GetSingleProductQueryHandler> _logger;
 
-        public GetSingleProductQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public GetSingleProductQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<GetSingleProductQueryHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

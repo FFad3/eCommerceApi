@@ -10,9 +10,9 @@ namespace eCommerceApp.Application.Features.Category.Commands.UpdateCategory
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<UpdateCategoryCommandHandler> _logger;
 
-        public UpdateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public UpdateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<UpdateCategoryCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

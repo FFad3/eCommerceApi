@@ -12,9 +12,9 @@ namespace eCommerceApp.Application.Features.Order.Queries.GetOrderPage
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<GetOrderPageQuaryHandler> _logger;
 
-        public GetOrderPageQuaryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public GetOrderPageQuaryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<GetOrderPageQuaryHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

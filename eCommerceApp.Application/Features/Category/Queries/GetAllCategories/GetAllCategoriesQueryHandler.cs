@@ -11,9 +11,9 @@ namespace eCommerceApp.Application.Features.Category.Queries.GetAllCategories
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<GetAllCategoriesQueryHandler> _logger;
 
-        public GetAllCategoriesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public GetAllCategoriesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<GetAllCategoriesQueryHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

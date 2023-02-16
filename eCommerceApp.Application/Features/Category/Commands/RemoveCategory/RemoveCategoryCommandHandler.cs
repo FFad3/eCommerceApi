@@ -10,9 +10,9 @@ namespace eCommerceApp.Application.Features.Category.Commands.RemoveCategory
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<RemoveCategoryCommandHandler> _logger;
 
-        public RemoveCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public RemoveCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<RemoveCategoryCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
