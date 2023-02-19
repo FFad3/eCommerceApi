@@ -22,10 +22,14 @@ namespace eCommerceApp.Application.Features.Category.Queries.GetAllCategories
 
         public async Task<IEnumerable<CategoryDto>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.Category.AsQuerable()
-                .Include(p => p.Products)
-                .Where(c => !c.IsRemoved)
-                .ProjectToListAsync<CategoryDto>(_mapper.ConfigurationProvider, cancellationToken);
+            var query = _unitOfWork.Category.AsQuerable();
+
+            if (!request.ShowRemoved)
+            {
+                query = query.Where(c => !c.IsRemoved);
+            }
+
+            var result = await query.Include(p => p.Products).ProjectToListAsync<CategoryDto>(_mapper.ConfigurationProvider, cancellationToken);
 
             return result;
         }

@@ -20,7 +20,7 @@ namespace eCommerceApp.Application.Features.Category.Queries.GetSingleCategory
 
         public async Task<CategoryWithProductsDto?> Handle(GetSingleCategoryQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.Category.FindSingleWithProductsAsync(x => x.Id == request.Id && !x.IsRemoved, cancellationToken);
+            var entity = await _unitOfWork.Category.FindSingleWithProductsAsync(x => x.Id == request.CategoryId && x.IsRemoved == request.ShowRemoved, cancellationToken);
 
             var result = _mapper.Map<CategoryWithProductsDto>(entity);
 

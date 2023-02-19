@@ -19,30 +19,16 @@ namespace eCommerce.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Categories()
         {
-            var result = await _mediator.Send(new GetAllCategoriesQuery());
+            var result = await _mediator.Send(new GetAllCategoriesQuery(showRemoved: false));
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Category(int id)
         {
-            var result = await _mediator.Send(new GetSingleCategoryQuery { Id = id });
-            return Ok(result);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryCommand command)
-        {
-            var result = await _mediator.Send(command);
-            return Ok(result);
-        }
-
-        [HttpPatch]
-        public async Task<IActionResult> Update(UpdateCategoryCommand command)
-        {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(new GetSingleCategoryQuery(categoryId: id, showRemoved: false));
             return Ok(result);
         }
     }
