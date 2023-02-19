@@ -33,26 +33,26 @@ namespace eCommerceApp.Persistence.Repositories
             return await _DbContext.Set<TEntity>().Where(predicate).ToListAsync(token);
         }
 
-        public Task<TEntity?> FindSingleAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken token)
+        public async Task<TEntity?> FindSingleAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken token)
         {
-            return _DbContext.Set<TEntity>().FirstOrDefaultAsync(predicate, token);
+            return await _DbContext.Set<TEntity>().FirstOrDefaultAsync(predicate, token);
         }
 
-        public Task<bool> IsExist(Expression<Func<TEntity, bool>> predicate, CancellationToken token)
+        public async Task<bool> IsExist(Expression<Func<TEntity, bool>> predicate, CancellationToken token)
         {
-            return _DbContext.Set<TEntity>().AnyAsync(predicate, token);
+            return await _DbContext.Set<TEntity>().AnyAsync(predicate, token);
         }
 
         public void Remove(TEntity entity)
         {
-            _DbContext.Entry(entity).State = EntityState.Deleted;
             _DbContext.Remove(entity);
+            _DbContext.Entry(entity).State = EntityState.Deleted;
         }
 
         public void Update(TEntity entity)
         {
-            _DbContext.Entry(entity).State = EntityState.Modified;
             _DbContext.Set<TEntity>().Update(entity);
+            _DbContext.Entry(entity).State = EntityState.Modified;
         }
     }
 }
