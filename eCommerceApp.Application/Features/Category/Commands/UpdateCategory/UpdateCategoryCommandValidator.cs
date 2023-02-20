@@ -24,8 +24,8 @@ namespace eCommerceApp.Application.Features.Category.Commands.UpdateCategory
 
         private async Task<bool> CategoryNameIsUnique(UpdateCategoryCommand command, CancellationToken token)
         {
-            var result = await _unitOfWork.Category.CountAllAsync(x => x.Name == command.Name, token);
-            return result <= 1;
+            var result = await _unitOfWork.Category.FindAllAsync(x => x.Name == command.Name, token);
+            return result.Count() <= 1 || result.First().Id == command.Id;
         }
     }
 }
