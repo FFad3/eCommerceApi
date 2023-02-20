@@ -102,8 +102,6 @@ namespace eCommerceApp.Persistence.Migrations
 
                     b.HasIndex("BasketId");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("BasketItems");
                 });
 
@@ -248,8 +246,6 @@ namespace eCommerceApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
@@ -421,15 +417,7 @@ namespace eCommerceApp.Persistence.Migrations
                         .HasForeignKey("BasketId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("eCommerceApp.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Basket");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("eCommerceApp.Domain.OrderItem", b =>
@@ -440,15 +428,7 @@ namespace eCommerceApp.Persistence.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("eCommerceApp.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("eCommerceApp.Domain.Product", b =>

@@ -132,7 +132,6 @@ namespace eCommerceApp.Persistence.Data
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
             builder.HasOne(e => e.Order).WithMany(e => e.Items).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(e => e.Product).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
     }
 
@@ -149,7 +148,6 @@ namespace eCommerceApp.Persistence.Data
         public void Configure(EntityTypeBuilder<BasketItem> builder)
         {
             builder.HasOne(e => e.Basket).WithMany(e => e.Items).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(e => e.Product).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
