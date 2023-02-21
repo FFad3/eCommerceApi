@@ -16,6 +16,7 @@ namespace eCommerceApp.Persistence
         private IProductRepository? _productRepository;
         private IBasketRepository? _basketRepository;
         private IOrderRepository? _orderRepository;
+        private IBasketItemRepository? _basketItemRepository;
 
         #endregion Repositories
 
@@ -26,6 +27,8 @@ namespace eCommerceApp.Persistence
         public IBasketRepository Basket => _basketRepository ??= new BasketRepository(_dbContext);
 
         public IOrderRepository Order => _orderRepository ??= new OrderRepository(_dbContext);
+
+        public IBasketItemRepository BasketItem => _basketItemRepository ??= new BasketItemRepository(_dbContext);
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {

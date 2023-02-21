@@ -28,6 +28,11 @@ namespace eCommerceApp.Application.Contracts.Persistence
         IOrderRepository Order { get; }
 
         /// <summary>
+        /// Gets BasketItemRepository
+        /// </summary>
+        IBasketItemRepository BasketItem { get; }
+
+        /// <summary>
         /// Save changes asynchronusly
         /// </summary>
         /// <param name="token"></param>
