@@ -1,6 +1,4 @@
-﻿using static eCommerceApp.Application.Features.Product.Queries.GetSingleProduct.ProductDto;
-
-namespace eCommerceApp.Application.Features.Category.Queries.GetSingleCategory
+﻿namespace eCommerceApp.Application.Features.Category.Queries.GetSingleCategory
 {
     public class CategoryWithProductsDto
     {

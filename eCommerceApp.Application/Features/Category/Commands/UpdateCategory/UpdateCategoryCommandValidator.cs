@@ -10,6 +10,7 @@ namespace eCommerceApp.Application.Features.Category.Commands.UpdateCategory
         public UpdateCategoryCommandValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+
             RuleFor(x => x.Id).NotNull();
 
             RuleFor(p => p.Name)
@@ -17,15 +18,21 @@ namespace eCommerceApp.Application.Features.Category.Commands.UpdateCategory
                            .NotNull()
                            .MaximumLength(70).WithMessage("{PropertyName} must be fewer than 70 characters");
 
+            RuleFor(r => r)
+                .NotNull().WithMessage("{PropertyName} is required");
+
             RuleFor(q => q)
                 .MustAsync(CategoryNameIsUnique)
-                .WithMessage("Leave type already exists");
+                .WithMessage("Category name already used");
         }
 
         private async Task<bool> CategoryNameIsUnique(UpdateCategoryCommand command, CancellationToken token)
         {
             var result = await _unitOfWork.Category.FindAllAsync(x => x.Name == command.Name, token);
-            return result.Count() <= 1 || result.First().Id == command.Id;
+
+            if (!result.Any()) return true;
+
+            return result.Count() <= 1 && result.First().Id == command.Id;
         }
     }
 }

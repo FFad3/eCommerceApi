@@ -40,7 +40,7 @@ namespace eCommerceApp.Application.Features.Product.Commands.UpdateProduct
         private async Task<bool> ProductNameIsUnique(UpdateProductCommand command, CancellationToken token)
         {
             var result = await _unitOfWork.Product.FindAllAsync(x => x.Name == command.Name, token);
-            return result.Count() <= 1 || result.First().Id == command.Id;
+            return result.Count() <= 1 && result.First().Id == command.Id;
         }
 
         private Task<bool> CategoryExists(UpdateProductCommand command, CancellationToken token)
