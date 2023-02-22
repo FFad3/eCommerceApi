@@ -1,4 +1,5 @@
 using eCommerce.Api.Configuration;
+using eCommerce.Api.Middleware;
 using NLog;
 using NLog.Web;
 
@@ -22,6 +23,8 @@ namespace eCommerce.Api
                 builder.Services.RegisterServices(builder.Configuration);
 
                 var app = builder.Build();
+
+                app.UseMiddleware<ExceptionMiddleware>();
 
                 // Configure the HTTP request pipeline.
                 if (app.Environment.IsDevelopment())
