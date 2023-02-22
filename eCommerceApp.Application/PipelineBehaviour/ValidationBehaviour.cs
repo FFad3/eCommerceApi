@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using eCommerceApp.Application.Exceptions;
+using FluentValidation;
 using MediatR;
 
 namespace eCommerceApp.Application.PipelineBehaviour
@@ -24,11 +25,11 @@ namespace eCommerceApp.Application.PipelineBehaviour
 
                 var failures = validationResults
                     .Where(r => r.Errors.Any())
-                    .SelectMany(r => r.Errors)
+                    //.SelectMany(r => r.Errors)
                     .ToList();
 
                 if (failures.Any())
-                    throw new ValidationException(failures);
+                    throw new BadRequestException("Invalid request", failures);
             }
             return await next();
         }
