@@ -1,4 +1,5 @@
 ﻿using eCommerceApp.Application;
+using eCommerceApp.Identity;
 using eCommerceApp.Infrastructure;
 using eCommerceApp.Persistence;
 using System;
@@ -23,6 +24,7 @@ namespace eCommerce.Api.Configuration
             services.RegisterApplication();
             services.RegisterInfrastructure(configuration);
             services.RegisterPersistance(configuration);
+            services.RegisterIdentity(configuration);
 
             return services;
         }
