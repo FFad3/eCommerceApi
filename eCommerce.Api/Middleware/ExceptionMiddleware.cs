@@ -4,7 +4,7 @@ using System.Net;
 
 namespace eCommerce.Api.Middleware
 {
-    public class ExceptionMiddleware
+    internal class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
 
