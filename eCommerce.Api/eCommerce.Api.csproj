@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\eCommerceApp.Application\eCommerceApp.Application.csproj" />
+    <ProjectReference Include="..\eCommerceApp.Identity\eCommerceApp.Identity.csproj" />
     <ProjectReference Include="..\eCommerceApp.Infrastructure\eCommerceApp.Infrastructure.csproj" />
     <ProjectReference Include="..\eCommerceApp.Persistence\eCommerceApp.Persistence.csproj" />
   </ItemGroup>

@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerceApp.Domain", "eCom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerce.Api", "eCommerce.Api\eCommerce.Api.csproj", "{7E992BA9-4938-453D-9033-76B468DE8C81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerceApp.Utilities", "eCommerceApp.Utilities\eCommerceApp.Utilities.csproj", "{DD362601-748F-4716-8F9D-2EF5DA5C7C8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerceApp.Utilities", "eCommerceApp.Utilities\eCommerceApp.Utilities.csproj", "{DD362601-748F-4716-8F9D-2EF5DA5C7C8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerceApp.Identity", "eCommerceApp.Identity\eCommerceApp.Identity.csproj", "{75C686BC-AB1C-4B50-A943-0C2BA433ADD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{DD362601-748F-4716-8F9D-2EF5DA5C7C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD362601-748F-4716-8F9D-2EF5DA5C7C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD362601-748F-4716-8F9D-2EF5DA5C7C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75C686BC-AB1C-4B50-A943-0C2BA433ADD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75C686BC-AB1C-4B50-A943-0C2BA433ADD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75C686BC-AB1C-4B50-A943-0C2BA433ADD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75C686BC-AB1C-4B50-A943-0C2BA433ADD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{B0CD0761-8BFE-4165-AE21-8D606AC1D8AF} = {107F55C3-8FAC-44D0-BD98-D115916D33B4}
 		{66C12144-B0FC-4D57-8E0D-1BF38A656EB1} = {6BA6FD27-D842-4CEE-94BE-B7FC4656154D}
 		{70823914-CC17-4063-8BBC-16F60E6B22D7} = {6BA6FD27-D842-4CEE-94BE-B7FC4656154D}
+		{75C686BC-AB1C-4B50-A943-0C2BA433ADD1} = {107F55C3-8FAC-44D0-BD98-D115916D33B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {118780E7-B525-4AA6-BA40-6DC633338475}
