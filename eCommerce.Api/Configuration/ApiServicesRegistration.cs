@@ -2,11 +2,6 @@
 using eCommerceApp.Identity;
 using eCommerceApp.Infrastructure;
 using eCommerceApp.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Api.Configuration
 {
