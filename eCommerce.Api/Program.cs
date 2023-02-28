@@ -15,6 +15,13 @@ namespace eCommerce.Api
             {
                 var builder = WebApplication.CreateBuilder(args);
 
+                builder.Services.AddCors(options =>
+                {
+                    options.AddPolicy("all", builder => builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+                });
+
                 // NLog: Setup NLog for Dependency injection
                 builder.Logging.ClearProviders();
                 builder.Host.UseNLog();
