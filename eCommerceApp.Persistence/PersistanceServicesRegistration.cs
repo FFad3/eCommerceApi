@@ -13,7 +13,15 @@ namespace eCommerceApp.Persistence
             services.AddScoped<AuditableEntitySaveChangesInterceptor>();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("eCommerceDb"));
+                options.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION") ?? configuration.GetConnectionString("eCommerceDb"),
+                    sqlServerOptionsAction: sqloptions =>
+                    {
+                        sqloptions.EnableRetryOnFailure(
+                            maxRetryCount: 10,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null
+                        );
+                    });
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
