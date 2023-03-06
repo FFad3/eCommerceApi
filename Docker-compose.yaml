@@ -1,0 +1,42 @@
+version: "3.4"
+
+networks:
+    back-tier: {}
+volumes:
+    sqlserver: {}
+services:
+    api:
+        container_name: "api"
+        build:
+          context: .
+          dockerfile: Dockerfile
+        ports:
+          - "5000:443"
+          - "5001:80"
+        depends_on:
+          - db
+        environment:
+           API_REDIRECT_PORT: "${API_REDIRECT_PORT}"
+           SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
+           DB_CONNECTION: "${DB_CONNECTION}"
+           ASPNETCORE_URLS: "${ASPNETCORE_URLS}"
+           ASPNETCORE_Kestrel__Certificates__Default__Password: "${ASPNETCORE_Kestrel__Certificates__Default__Password}"
+           ASPNETCORE_Kestrel__Certificates__Default__Path: "${ASPNETCORE_Kestrel__Certificates__Default__Path}"
+        volumes:
+          - ~/.aspnet/https:/https:ro
+        networks:
+          - back-tier
+    db:
+        container_name: "db"
+        image: "mcr.microsoft.com/mssql/server:2022-latest"
+        ports:
+          - "1433:1433"
+        environment:
+            MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+            ACCEPT_EULA: "${ACCEPT_EULA}"
+        networks:
+          - back-tier
+        volumes:
+          - sqlserver:/var/opt/mssql
+
+
