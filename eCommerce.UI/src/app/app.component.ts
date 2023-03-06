@@ -10,7 +10,7 @@ export class AppComponent {
   public categories?: Category[];
 
   constructor(http: HttpClient) {
-    http.get<Category[]>('https://localhost:7098/api/Category').subscribe(result => {
+    http.get<Category[]>('/api/Category').subscribe(result => {
       this.categories = result;
     }, error => console.error(error));
   }

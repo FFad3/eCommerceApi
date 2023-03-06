@@ -2,6 +2,7 @@ using eCommerce.Api.Configuration;
 using eCommerce.Api.Middleware;
 using NLog;
 using NLog.Web;
+using System.Net;
 
 namespace eCommerce.Api
 {
@@ -29,6 +30,17 @@ namespace eCommerce.Api
                 //Configure dependencies
                 builder.Services.RegisterServices(builder.Configuration);
 
+                if (!builder.Environment.IsDevelopment())
+                {
+                    if (int.TryParse(Environment.GetEnvironmentVariable("API_REDIRECT_PORT"), out int port))
+                    {
+                        builder.Services.AddHttpsRedirection(options =>
+                        {
+                            options.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
+                            options.HttpsPort = port;
+                        });
+                    }
+                }
                 var app = builder.Build();
 
                 app.UseMiddleware<ExceptionMiddleware>();
