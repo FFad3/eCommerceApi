@@ -19,11 +19,12 @@ services:
            API_REDIRECT_PORT: "${API_REDIRECT_PORT}"
            SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
            DB_CONNECTION: "${DB_CONNECTION}"
+           ASPNETCORE_ENVIRONMENT: "${ASPNETCORE_ENVIRONMENT}"
            ASPNETCORE_URLS: "${ASPNETCORE_URLS}"
            ASPNETCORE_Kestrel__Certificates__Default__Password: "${ASPNETCORE_Kestrel__Certificates__Default__Password}"
            ASPNETCORE_Kestrel__Certificates__Default__Path: "${ASPNETCORE_Kestrel__Certificates__Default__Path}"
         volumes:
-          - ~/.aspnet/https:/https:ro
+          - ${USERPROFILE}\.aspnet\https:/https/
         networks:
           - back-tier
     db:
