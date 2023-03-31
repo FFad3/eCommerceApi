@@ -9,7 +9,7 @@ namespace eCommerce.Api
     public class Program
     {
         public static void Main(string[] args)
-        {
+        {           
             var logger = LogManager.Setup().LoadConfigurationFromFile().GetCurrentClassLogger();
             logger.Debug("init main");
             try
