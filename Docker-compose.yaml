@@ -24,7 +24,7 @@ services:
            ASPNETCORE_Kestrel__Certificates__Default__Password: "${ASPNETCORE_Kestrel__Certificates__Default__Password}"
            ASPNETCORE_Kestrel__Certificates__Default__Path: "${ASPNETCORE_Kestrel__Certificates__Default__Path}"
         volumes:
-          - ${USERPROFILE}\.aspnet\https:/https/
+          - ${USERPROFILE}/.aspnet/https:/https/
         networks:
           - back-tier
     db:
