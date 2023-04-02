@@ -1,8 +1,10 @@
-﻿using eCommerceApp.Application.PipelineBehaviour;
+﻿using System.Reflection;
+using eCommerceApp.Application.Models.Settings;
+using eCommerceApp.Application.PipelineBehaviour;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace eCommerceApp.Application
 {
@@ -17,6 +19,11 @@ namespace eCommerceApp.Application
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
+            return services;
+        }
+        public static IServiceCollection RegisterSettings(this IServiceCollection services,IConfiguration configuration)
+        {
+            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             return services;
         }
     }
