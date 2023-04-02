@@ -1,6 +1,7 @@
 ﻿using eCommerceApp.Application.Contracts.Identity;
 using eCommerceApp.Application.Exceptions;
 using eCommerceApp.Application.Models.Identity;
+using eCommerceApp.Application.Models.Settings;
 using eCommerceApp.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -66,15 +67,16 @@ namespace eCommerceApp.Identity.Services
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "test");
+                await _userManager.AddToRoleAsync(user, "User");
                 return new RegistrationResponse() { UserId = user.Id };
             }
             else
             {
                 StringBuilder sb = new();
+                sb.AppendLine("Registration failed:");
                 foreach (var error in result.Errors)
                 {
-                    sb.AppendFormat("!{0}\n", error.Description);
+                    sb.AppendFormat("-{0}\n", error.Description);
                 }
                 throw new BadRequestException($"{sb}");
             }
@@ -93,7 +95,7 @@ namespace eCommerceApp.Identity.Services
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(_jwtSettings.DurationInMinutes),
+                expires: _jwtSettings.ExpirationDate,
                 signingCredentials: signingCredentials);
 
             return jwtSeciurityToken;
@@ -102,7 +104,7 @@ namespace eCommerceApp.Identity.Services
         private async Task<IEnumerable<Claim>> GetApplicationClaimsAsync(ApplicationUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
-            var roleClaims = await GetApplicationRolesClaimsAsync(user);
+            var roleClaims = (await _userManager.GetRolesAsync(user))?.Select(r => new Claim(ClaimTypes.Role, r)).ToList() ?? new();
 
             var claims = new[]
             {
@@ -115,15 +117,6 @@ namespace eCommerceApp.Identity.Services
             .Union(roleClaims);
 
             return claims;
-        }
-
-        private async Task<IEnumerable<Claim>> GetApplicationRolesClaimsAsync(ApplicationUser user)
-        {
-            //Returns claim(Role,RoleName)
-            var roles = await _userManager.GetRolesAsync(user);
-            var rolesClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
-
-            return rolesClaims;
         }
     }
 }

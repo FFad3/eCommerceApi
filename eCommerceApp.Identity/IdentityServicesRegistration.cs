@@ -1,5 +1,5 @@
 ﻿using eCommerceApp.Application.Contracts.Identity;
-using eCommerceApp.Application.Models.Identity;
+using eCommerceApp.Application.Models.Settings;
 using eCommerceApp.Identity.Data;
 using eCommerceApp.Identity.Models;
 using eCommerceApp.Identity.Services;
@@ -16,12 +16,11 @@ namespace eCommerceApp.Identity
     public static class IdentityServicesRegistration
     {
         public static IServiceCollection RegisterIdentity(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+        {          
 
             services.AddDbContext<ApplicationIdentityDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("eCommerceDb"));
+                options.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION") ?? configuration.GetConnectionString("eCommerceDb"));
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
