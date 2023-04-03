@@ -20,7 +20,8 @@ namespace eCommerceApp.Identity
 
             services.AddDbContext<ApplicationIdentityDbContext>(options =>
             {
-                options.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION") ?? configuration.GetConnectionString("eCommerceDb"));
+                var conn = configuration.GetConnectionString("eCommerceDb") ?? throw new ArgumentNullException("Connection string 'eCommerceDb' not found in configuration.");
+                options.UseSqlServer(conn);
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()

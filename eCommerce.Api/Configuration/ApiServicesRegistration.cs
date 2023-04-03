@@ -16,7 +16,7 @@ namespace eCommerce.Api.Configuration
 
             services.AddHttpContextAccessor();
 
-            services.RegisterServices(configuration);
+            services.RegisterSettings(configuration);
             services.RegisterApplication();
             services.RegisterInfrastructure(configuration);
             services.RegisterPersistance(configuration);
