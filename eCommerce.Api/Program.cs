@@ -29,8 +29,8 @@ namespace eCommerce.Api
 
                 //Configure dependencies
                 builder.Services.RegisterServices(builder.Configuration);
-
-                if (!builder.Environment.IsDevelopment())
+                bool isDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+                if (isDocker)
                 {
                     if (int.TryParse(Environment.GetEnvironmentVariable("API_REDIRECT_PORT"), out int port))
                     {
@@ -46,7 +46,7 @@ namespace eCommerce.Api
                 app.UseMiddleware<ExceptionMiddleware>();
 
                 // Configure the HTTP request pipeline.
-                if (app.Environment.IsDevelopment())
+                if (app.Environment.IsDevelopment()|| isDocker)
                 {
                     app.UseSwagger();
                     app.UseSwaggerUI();
