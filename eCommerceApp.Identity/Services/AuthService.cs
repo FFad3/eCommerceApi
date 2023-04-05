@@ -1,14 +1,17 @@
-﻿using eCommerceApp.Application.Contracts.Identity;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
+using eCommerceApp.Application.Contracts.Identity;
 using eCommerceApp.Application.Exceptions;
 using eCommerceApp.Application.Models.Identity;
 using eCommerceApp.Application.Models.Settings;
 using eCommerceApp.Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace eCommerceApp.Identity.Services
 {
@@ -40,14 +43,23 @@ namespace eCommerceApp.Identity.Services
                 throw new BadRequestException($"Credentials for {request.Email} are invalid");
             }
 
-            JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
+            //Get user application claims
+            var claims = await GetAuthClaims(user);
+
+            //Generate Token & Refresh Token
+            var token = GenerateToken(claims);
+            var refreshToken = GenerateRefreshToken();
+            //Set new refresh token
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(_jwtSettings.RefreshTokenValidityInDays);
+            //Update user with new refresh token
+            await _userManager.UpdateAsync(user);
 
             var response = new AuthResponse
             {
-                Id = user.Id,
-                Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
-                Email = user.Email ?? "",
-                UserName = user.UserName ?? "",
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                RefreshToken = refreshToken,
+                Expiration = token.ValidTo
             };
 
             return response;
@@ -65,12 +77,8 @@ namespace eCommerceApp.Identity.Services
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, "User");
-                return new RegistrationResponse() { UserId = user.Id };
-            }
-            else
+
+            if (!result.Succeeded)
             {
                 StringBuilder sb = new();
                 sb.AppendLine("Registration failed:");
@@ -80,13 +88,49 @@ namespace eCommerceApp.Identity.Services
                 }
                 throw new BadRequestException($"{sb}");
             }
+
+            await _userManager.AddToRoleAsync(user, UserRoles.User);
+            return new RegistrationResponse() { UserId = user.Id };
         }
 
-        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+        public async Task<AuthResponse> RefreshToken(TokensPairModel tokensPairModel)
         {
-            //Get Application and Roles claims
-            var claims = await GetApplicationClaimsAsync(user);
+            var principal = GetPrincipalFromExpiredToken(tokensPairModel.AccessToken) ?? throw new SecurityTokenException("Invalid access token or refresh token");
 
+            string userId = principal.FindFirstValue("uid") ?? throw new ArgumentNullException("Was null during RefreshToken method", nameof(userId));
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null || user.RefreshToken != tokensPairModel.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            {
+                throw new SecurityTokenException("Invalid access token or refresh token");
+            }
+
+            var claims = principal.Claims;
+
+            var newAccessToken = GenerateToken(claims);
+            var newRefreshToken = GenerateRefreshToken();
+
+            user.RefreshToken = newRefreshToken;
+            await _userManager.UpdateAsync(user);
+
+            return new AuthResponse
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
+                RefreshToken = newRefreshToken,
+                Expiration = DateTime.Now.AddDays(_jwtSettings.RefreshTokenValidityInDays),
+            };
+        }
+
+        private static string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
+
+        private JwtSecurityToken GenerateToken(IEnumerable<Claim>? claims)
+        {
             var symmetricSeciurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
 
             var signingCredentials = new SigningCredentials(symmetricSeciurityKey, SecurityAlgorithms.HmacSha256);
@@ -101,22 +145,45 @@ namespace eCommerceApp.Identity.Services
             return jwtSeciurityToken;
         }
 
-        private async Task<IEnumerable<Claim>> GetApplicationClaimsAsync(ApplicationUser user)
+        private async Task<IEnumerable<Claim>> GetAuthClaims(ApplicationUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roleClaims = (await _userManager.GetRolesAsync(user))?.Select(r => new Claim(ClaimTypes.Role, r)).ToList() ?? new();
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub,user.UserName ?? ""),
+                new Claim(JwtRegisteredClaimNames.Name,user.UserName ?? ""),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub,user.Email ?? ""),
+                new Claim(JwtRegisteredClaimNames.Email,user.Email ?? ""),
                 new Claim("uid",user.Id),
             }
             .Union(userClaims)
             .Union(roleClaims);
 
             return claims;
+        }
+
+        private ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
+        {
+            var symmetricSeciurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = symmetricSeciurityKey,
+                ValidateLifetime = false
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+
+            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Invalid token");
+
+            return principal;
         }
     }
 }

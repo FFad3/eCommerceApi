@@ -26,5 +26,11 @@ namespace eCommerce.Api.Controllers
         {
             return Ok(await _authService.Register(request));
         }
+
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<AuthResponse>> RefreshToken(TokensPairModel tokensPairModel)
+        {
+            return Ok(await _authService.RefreshToken(tokensPairModel));
+        }
     }
 }
