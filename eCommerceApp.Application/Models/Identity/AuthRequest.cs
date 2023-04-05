@@ -14,7 +14,7 @@ namespace eCommerceApp.Application.Models.Identity
 
     public class AuthResponse
     {
-        public string Token { get; init; } = string.Empty;
+        public string AccessToken { get; init; } = string.Empty;
         public string RefreshToken { get; init; } = string.Empty;
         public DateTime Expiration { get; init; }
     }

@@ -57,7 +57,7 @@ namespace eCommerceApp.Identity.Services
 
             var response = new AuthResponse
             {
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 RefreshToken = refreshToken,
                 Expiration = token.ValidTo
             };
@@ -115,7 +115,7 @@ namespace eCommerceApp.Identity.Services
 
             return new AuthResponse
             {
-                Token = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
                 RefreshToken = newRefreshToken,
                 Expiration = DateTime.Now.AddDays(_jwtSettings.RefreshTokenValidityInDays),
             };
