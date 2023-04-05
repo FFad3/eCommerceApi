@@ -4,23 +4,23 @@ namespace eCommerceApp.Application.Models.Identity
 {
     public class RegistrationRequest
     {
-        [Required]
-        public string FirstName { get; set; } = string.Empty;
+        [Required(ErrorMessage = "First Name is required")]
+        public string FirstName { get; set; } = null!;
 
-        [Required]
-        public string LastName { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Last Name is required")]
+        public string LastName { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "UserName is required")]
         [MinLength(6)]
-        public string UserName { get; set; } = string.Empty;
+        public string UserName { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "Password is required")]
         [MinLength(6)]
-        public string Password { get; set; } = string.Empty;
+        public string Password { get; set; } = null!;
     }
 
     public class RegistrationResponse

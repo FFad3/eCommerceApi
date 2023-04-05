@@ -14,7 +14,7 @@ namespace eCommerceApp.Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddMediatR(Assembly.GetExecutingAssembly())
+            services.AddMediatR(cfg=> cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()))
                 .ConfigurePipeline();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

@@ -1,22 +1,21 @@
-﻿namespace eCommerceApp.Application.Models.Identity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace eCommerceApp.Application.Models.Identity
 {
     public class AuthRequest
     {
-        public AuthRequest(string email, string password)
-        {
-            Email = email;
-            Password = password;
-        }
+        [Required(ErrorMessage ="Email is required")]
+        [EmailAddress]
+        public string Email { get; set; } = null!;
 
-        public string Email { get; set; }
-        public string Password { get; set; }
+        [Required(ErrorMessage = "Password is required")]
+        public string Password { get; set; } = null!;
     }
 
     public class AuthResponse
     {
-        public string Id { get; set; } = string.Empty;
-        public string UserName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Token { get; set; } = string.Empty;
+        public string Token { get; init; } = string.Empty;
+        public string RefreshToken { get; init; } = string.Empty;
+        public DateTime Expiration { get; init; }
     }
 }
