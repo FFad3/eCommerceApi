@@ -13,20 +13,14 @@ namespace eCommerceApp.Identity.Data
                 new IdentityRole
                 {
                     Id = "001",
-                    Name = "Administrator",
-                    NormalizedName = "ADMINISTRATOR"
+                    Name = UserRoles.Admin,
+                    NormalizedName = UserRoles.Admin.ToUpper()
                 },
                 new IdentityRole
                 {
                     Id = "002",
-                    Name = "Employee",
-                    NormalizedName = "EMPLOYEE"
-                },
-                new IdentityRole
-                {
-                    Id = "003",
-                    Name = "User",
-                    NormalizedName = "USER"
+                    Name = UserRoles.User,
+                    NormalizedName = UserRoles.User.ToUpper()
                 }
                 );
         }
@@ -44,7 +38,7 @@ namespace eCommerceApp.Identity.Data
                     Email = "admin@localhost.com",
                     NormalizedEmail = "ADMIN@LOCALHOST.COM",
                     FirstName = "System",
-                    LastName = "Admin",
+                    LastName = "System",
                     UserName = "admin@localhost.com",
                     NormalizedUserName = "ADMIN@LOCALHOST.COM",
                     PasswordHash = hasher.HashPassword(null!, "zaq1@WSX"),
@@ -55,7 +49,7 @@ namespace eCommerceApp.Identity.Data
                     Id = "u002",
                     Email = "user@localhost.com",
                     NormalizedEmail = "USER@LOCALHOST.COM",
-                    FirstName = "System",
+                    FirstName = "User",
                     LastName = "User",
                     UserName = "user@localhost.com",
                     NormalizedUserName = "USER@LOCALHOST.COM",
@@ -77,7 +71,7 @@ namespace eCommerceApp.Identity.Data
                 },
                 new IdentityUserRole<string>
                 {
-                    RoleId = "003",
+                    RoleId = "002",
                     UserId = "u002"
                 }
                 );
