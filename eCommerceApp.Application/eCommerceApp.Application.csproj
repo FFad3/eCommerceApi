@@ -21,4 +21,8 @@
     <ProjectReference Include="..\eCommerceApp.Utilities\eCommerceApp.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Auth\Queries\" />
+  </ItemGroup>
+
 </Project>
