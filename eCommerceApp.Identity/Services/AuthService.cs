@@ -2,14 +2,15 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 using eCommerceApp.Application.Contracts.Identity;
 using eCommerceApp.Application.Exceptions;
+using eCommerceApp.Application.Features.Auth.Commands.Authentication;
+using eCommerceApp.Application.Features.Auth.Commands.Refresh;
+using eCommerceApp.Application.Features.Auth.Commands.Register;
 using eCommerceApp.Application.Models.Identity;
 using eCommerceApp.Application.Models.Settings;
 using eCommerceApp.Identity.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -30,7 +31,7 @@ namespace eCommerceApp.Identity.Services
             _jwtSettings = jwtSettings.Value;
         }
 
-        public async Task<AuthResponse> Login(AuthRequest request)
+        public async Task<AuthResponse?> Login(AuthCommand request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
 
@@ -65,7 +66,7 @@ namespace eCommerceApp.Identity.Services
             return response;
         }
 
-        public async Task<RegistrationResponse> Register(RegistrationRequest request)
+        public async Task<RegistrationResponse> Register(RegisterCommand request)
         {
             var user = new ApplicationUser
             {
@@ -93,14 +94,17 @@ namespace eCommerceApp.Identity.Services
             return new RegistrationResponse() { UserId = user.Id };
         }
 
-        public async Task<AuthResponse> RefreshToken(TokensPairModel tokensPairModel)
+        public async Task<AuthResponse> RefreshToken(RefreshTokenCommand tokensPairModel)
         {
             var principal = GetPrincipalFromExpiredToken(tokensPairModel.AccessToken) ?? throw new SecurityTokenException("Invalid access token or refresh token");
 
             string userId = principal.FindFirstValue("uid") ?? throw new ArgumentNullException("Was null during RefreshToken method", nameof(userId));
+
             var user = await _userManager.FindByIdAsync(userId);
 
-            if (user == null || user.RefreshToken != tokensPairModel.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            if (user == null
+                || user.RefreshToken != tokensPairModel.RefreshToken
+                || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
                 throw new SecurityTokenException("Invalid access token or refresh token");
             }
@@ -163,27 +167,35 @@ namespace eCommerceApp.Identity.Services
             return claims;
         }
 
-        private ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
+        private ClaimsPrincipal? GetPrincipalFromExpiredToken(string token)
         {
             var symmetricSeciurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
 
-            var tokenValidationParameters = new TokenValidationParameters
+            try
             {
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = symmetricSeciurityKey,
-                ValidateLifetime = false
-            };
+                var tokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = symmetricSeciurityKey,
+                    ValidateLifetime = false
+                };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+                var tokenHandler = new JwtSecurityTokenHandler();
 
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+                tokenHandler.CanReadToken(token);
+                var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
 
-            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                throw new SecurityTokenException("Invalid token");
+                if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                    throw new Exception();
 
-            return principal;
+                return principal;
+            }
+            catch (Exception ex)
+            {
+                throw new SecurityTokenException("Invalid token", ex);
+            }
         }
     }
 }
