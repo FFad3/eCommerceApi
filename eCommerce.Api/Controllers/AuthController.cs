@@ -1,5 +1,8 @@
-﻿using eCommerceApp.Application.Contracts.Identity;
+﻿using eCommerceApp.Application.Features.Auth.Commands.Authentication;
+using eCommerceApp.Application.Features.Auth.Commands.Refresh;
+using eCommerceApp.Application.Features.Auth.Commands.Register;
 using eCommerceApp.Application.Models.Identity;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Api.Controllers
@@ -8,29 +11,29 @@ namespace eCommerce.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
+        private readonly IMediator _mediator;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IMediator mediator)
         {
-            _authService = authService;
+            _mediator = mediator;
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AuthResponse>> Login(AuthRequest request)
+        public async Task<ActionResult<AuthResponse>> Login(AuthCommand request)
         {
-            return Ok(await _authService.Login(request));
+            return Ok(await _mediator.Send(request));
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
+        public async Task<ActionResult<RegistrationResponse>> Register(RegisterCommand request)
         {
-            return Ok(await _authService.Register(request));
+            return Ok(await _mediator.Send(request));
         }
 
         [HttpPost("refresh-token")]
-        public async Task<ActionResult<AuthResponse>> RefreshToken(TokensPairModel tokensPairModel)
+        public async Task<ActionResult<AuthResponse>> RefreshToken(RefreshTokenCommand request)
         {
-            return Ok(await _authService.RefreshToken(tokensPairModel));
+            return Ok(await _mediator.Send(request));
         }
     }
 }
