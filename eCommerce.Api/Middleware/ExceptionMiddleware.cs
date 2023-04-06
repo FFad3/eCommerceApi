@@ -1,5 +1,6 @@
 ﻿using eCommerce.Api.Models;
 using eCommerceApp.Application.Exceptions;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
 
 namespace eCommerce.Api.Middleware
@@ -52,6 +53,17 @@ namespace eCommerce.Api.Middleware
                         Status = (int)statusCode,
                         Type = nameof(NotFoundException),
                         Detail = notFound.InnerException?.Message,
+                    };
+                    break;
+
+                case SecurityTokenException secException:
+                    statusCode = HttpStatusCode.Unauthorized;
+                    problem = new CustomProblemDetails
+                    {
+                        Title = secException.Message,
+                        Status = (int)statusCode,
+                        Type = nameof(SecurityTokenException),
+                        Detail = secException.InnerException?.Message,
                     };
                     break;
 
