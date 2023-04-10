@@ -33,6 +33,7 @@ namespace eCommerceApp.Identity.Services
 
         public async Task<AuthResponse?> Login(AuthCommand request)
         {
+            if(request.Email is null || request.Password is null) throw new BadRequestException($"Incorrect Credentials");
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             _ = user ?? throw new NotFoundException($"User with {request.Email} not found.");
@@ -46,7 +47,7 @@ namespace eCommerceApp.Identity.Services
 
             //Get user application claims
             var claims = await GetAuthClaims(user);
-
+            var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault() ?? string.Empty;
             //Generate Token & Refresh Token
             var token = GenerateToken(claims);
             var refreshToken = GenerateRefreshToken();
@@ -60,6 +61,7 @@ namespace eCommerceApp.Identity.Services
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 RefreshToken = refreshToken,
+                Role = role,
                 Expiration = token.ValidTo
             };
 
@@ -96,6 +98,8 @@ namespace eCommerceApp.Identity.Services
 
         public async Task<AuthResponse> RefreshToken(RefreshTokenCommand tokensPairModel)
         {
+            if(tokensPairModel.RefreshToken is null || tokensPairModel.AccessToken is null) throw new SecurityTokenException("Invalid access token or refresh token");
+
             var principal = GetPrincipalFromExpiredToken(tokensPairModel.AccessToken) ?? throw new SecurityTokenException("Invalid access token or refresh token");
 
             string userId = principal.FindFirstValue("uid") ?? throw new ArgumentNullException("Was null during RefreshToken method", nameof(userId));
@@ -113,6 +117,7 @@ namespace eCommerceApp.Identity.Services
 
             var newAccessToken = GenerateToken(claims);
             var newRefreshToken = GenerateRefreshToken();
+            var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault() ?? string.Empty;
 
             user.RefreshToken = newRefreshToken;
             await _userManager.UpdateAsync(user);
@@ -121,6 +126,7 @@ namespace eCommerceApp.Identity.Services
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
                 RefreshToken = newRefreshToken,
+                Role = role,
                 Expiration = DateTime.Now.AddDays(_jwtSettings.RefreshTokenValidityInDays),
             };
         }

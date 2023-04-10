@@ -9,4 +9,10 @@
         public double RefreshTokenValidityInDays { get; set; }
         public DateTime ExpirationDate => DateTime.Now.AddMinutes(DurationInMinutes);
     }
+
+    public static class JwtTokensNames
+    {
+        public static string AccessToken = "access_token";
+        public static string RefreshToken = "refresh_token";
+    }
 }

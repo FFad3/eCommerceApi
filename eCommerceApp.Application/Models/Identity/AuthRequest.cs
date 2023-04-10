@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace eCommerceApp.Application.Models.Identity
 {
@@ -14,8 +15,11 @@ namespace eCommerceApp.Application.Models.Identity
 
     public class AuthResponse
     {
+        [JsonIgnore]
         public string AccessToken { get; init; } = string.Empty;
+        [JsonIgnore]
         public string RefreshToken { get; init; } = string.Empty;
+        public string Role { get; init; } = string.Empty;
         public DateTime Expiration { get; init; }
     }
 }

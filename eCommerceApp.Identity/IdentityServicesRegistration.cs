@@ -35,7 +35,12 @@ namespace eCommerceApp.Identity
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
+            })
+            .AddCookie(c =>
+            {
+                c.Cookie.Name = JwtTokensNames.AccessToken;
+            })
+            .AddJwtBearer(o =>
             {
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -47,6 +52,15 @@ namespace eCommerceApp.Identity
                     ValidIssuer = configuration["JwtSettings:Issuer"],
                     ValidAudience = configuration["JwtSettings:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!))
+                };
+
+                o.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        context.Token = context.Request.Cookies[JwtTokensNames.AccessToken];
+                        return Task.CompletedTask;
+                    }
                 };
             });
             return services;

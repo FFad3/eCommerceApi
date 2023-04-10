@@ -1,6 +1,7 @@
 ﻿using eCommerceApp.Application.Features.Product.Queries.GetPaginatedProducts;
 using eCommerceApp.Application.Features.Product.Queries.GetSingleProduct;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Api.Controllers
@@ -17,6 +18,7 @@ namespace eCommerce.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Get([FromQuery] GetProductPageQuery query)
         {
             var result = await _mediator.Send(query);
