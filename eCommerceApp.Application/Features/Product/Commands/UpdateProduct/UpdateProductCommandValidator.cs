@@ -13,6 +13,7 @@ namespace eCommerceApp.Application.Features.Product.Commands.UpdateProduct
 
             RuleFor(p => p.Name)
                  .NotEmpty().WithMessage("{PropertyName} is required")
+                 .MinimumLength(5).WithMessage("{PropertyName} must be higher than 5 characters")
                  .MaximumLength(70).WithMessage("{PropertyName} must be fewer than 70 characters");
 
             RuleFor(c => c.CategoryId)
@@ -24,13 +25,13 @@ namespace eCommerceApp.Application.Features.Product.Commands.UpdateProduct
 
             RuleFor(d => d.Description)
                 .NotEmpty().WithMessage("{PropertyName} is required")
-                .MinimumLength(50).WithMessage("{PropertyName} must be higher than 50 characters")
+                .MinimumLength(10).WithMessage("{PropertyName} must be higher than 10 characters")
                 .MaximumLength(500).WithMessage("{PropertyName} must be fewer than 500 characters");
 
             RuleFor(d => d.ImgUrl)
                 .NotEmpty().WithMessage("{PropertyName} is required")
-                .MinimumLength(15).WithMessage("{PropertyName} must be higher than 50 characters")
-                .MaximumLength(50).WithMessage("{PropertyName} must be fewer than 500 characters");
+                .MinimumLength(10).WithMessage("{PropertyName} must be higher than 10 characters")
+                .MaximumLength(50).WithMessage("{PropertyName} must be fewer than 50 characters");
 
             RuleFor(n => n)
                    .MustAsync(ProductNameIsUnique).WithMessage("Product already exists")
