@@ -92,7 +92,7 @@ namespace eCommerceApp.Identity.Services
                 throw new BadRequestException($"{sb}");
             }
 
-            await _userManager.AddToRoleAsync(user, UserRoles.User);
+            await _userManager.AddToRoleAsync(user, IdentityDbPopulateConstants.User);
             return new RegistrationResponse() { UserId = user.Id };
         }
 
@@ -165,7 +165,7 @@ namespace eCommerceApp.Identity.Services
                 new Claim(JwtRegisteredClaimNames.Name,user.UserName ?? ""),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email,user.Email ?? ""),
-                new Claim("uid",user.Id),
+                new Claim(JwtRegisteredClaimNames.NameId,user.Id),
             }
             .Union(userClaims)
             .Union(roleClaims);

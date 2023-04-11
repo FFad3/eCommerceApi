@@ -7,20 +7,21 @@ namespace eCommerceApp.Identity.Data
 {
     public class IdentityRoleConfiguration : IEntityTypeConfiguration<IdentityRole>
     {
+
         public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
             builder.HasData(
                 new IdentityRole
                 {
-                    Id = "001",
-                    Name = UserRoles.Admin,
-                    NormalizedName = UserRoles.Admin.ToUpper()
+                    Id = IdentityDbPopulateConstants.AdminRoleId,
+                    Name = IdentityDbPopulateConstants.Admin,
+                    NormalizedName = IdentityDbPopulateConstants.Admin.ToUpper()
                 },
                 new IdentityRole
                 {
-                    Id = "002",
-                    Name = UserRoles.User,
-                    NormalizedName = UserRoles.User.ToUpper()
+                    Id = IdentityDbPopulateConstants.UserRoleId,
+                    Name = IdentityDbPopulateConstants.User,
+                    NormalizedName = IdentityDbPopulateConstants.User.ToUpper()
                 }
                 );
         }
@@ -34,7 +35,7 @@ namespace eCommerceApp.Identity.Data
             builder.HasData(
                 new ApplicationUser
                 {
-                    Id = "u001",
+                    Id = IdentityDbPopulateConstants.AdminId,
                     Email = "admin@localhost.com",
                     NormalizedEmail = "ADMIN@LOCALHOST.COM",
                     FirstName = "System",
@@ -46,7 +47,7 @@ namespace eCommerceApp.Identity.Data
                 },
                 new ApplicationUser
                 {
-                    Id = "u002",
+                    Id = IdentityDbPopulateConstants.UserId,
                     Email = "user@localhost.com",
                     NormalizedEmail = "USER@LOCALHOST.COM",
                     FirstName = "User",
@@ -66,13 +67,13 @@ namespace eCommerceApp.Identity.Data
             builder.HasData(
                 new IdentityUserRole<string>
                 {
-                    RoleId = "001",
-                    UserId = "u001"
+                    RoleId = IdentityDbPopulateConstants.AdminRoleId,
+                    UserId = IdentityDbPopulateConstants.AdminId
                 },
                 new IdentityUserRole<string>
                 {
-                    RoleId = "002",
-                    UserId = "u002"
+                    RoleId = IdentityDbPopulateConstants.UserRoleId,
+                    UserId = IdentityDbPopulateConstants.UserId
                 }
                 );
         }
