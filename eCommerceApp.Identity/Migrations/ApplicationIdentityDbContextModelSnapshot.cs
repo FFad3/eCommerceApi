@@ -51,13 +51,13 @@ namespace eCommerceApp.Identity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "001",
+                            Id = "56d441a5-bfb6-4bf6-a4c6-4d6b0c6f11ad",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "002",
+                            Id = "d71f9320-3c57-4b17-a4ec-01c4f6b4e4ab",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -152,13 +152,13 @@ namespace eCommerceApp.Identity.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "u001",
-                            RoleId = "001"
+                            UserId = "a1530663-8c3b-4e2d-bcc3-1a65c1d1219e",
+                            RoleId = "56d441a5-bfb6-4bf6-a4c6-4d6b0c6f11ad"
                         },
                         new
                         {
-                            UserId = "u002",
-                            RoleId = "002"
+                            UserId = "e7b078c8-979e-4e1e-9550-69c93b9cf9ee",
+                            RoleId = "d71f9320-3c57-4b17-a4ec-01c4f6b4e4ab"
                         });
                 });
 
@@ -262,9 +262,9 @@ namespace eCommerceApp.Identity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "u001",
+                            Id = "a1530663-8c3b-4e2d-bcc3-1a65c1d1219e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fcf2f1f1-2d93-442c-9e97-2b8dd9dbdcf1",
+                            ConcurrencyStamp = "6b2e6fdc-e2f6-4665-a97e-8cd012ff5e7b",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -272,18 +272,18 @@ namespace eCommerceApp.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOqDu5/nF4t39A0SOm2jDGvyuzjRg74NsAOqARwt+LDDDfdi2lCyKw2BySaXUjl+EA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHFHqjVrPLHZMAYkI4434y7AnR5DyVmqO//51AL5qF/84k965yObSurR/RWQzNG1qw==",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "641b74ec-bc46-4c26-a902-90d6db8d5764",
+                            SecurityStamp = "97de55da-abfb-42d6-bfad-64eb5e76a582",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
                         new
                         {
-                            Id = "u002",
+                            Id = "e7b078c8-979e-4e1e-9550-69c93b9cf9ee",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a167ffbc-71af-4418-8904-aec4406c2bf1",
+                            ConcurrencyStamp = "7e2f9db4-7c2b-425a-b39e-8acff10709c8",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "User",
@@ -291,10 +291,10 @@ namespace eCommerceApp.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECsf73oJ0Mwlxi7sOF+fAO3b2MXjYG9gD2Aydt9zBfqoOz4t+O60WHj70OspLQoWWA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN7UqW0oi52wp+FkYBeIl4d45HiWu8Lw/wZj0Uz8mNMy+fLMHNnYB35m4rUW0TCVwg==",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "725d917c-51ce-4e0d-ae27-c7f9b338b0f0",
+                            SecurityStamp = "798998fa-762e-439e-9050-964940488b00",
                             TwoFactorEnabled = false,
                             UserName = "user@localhost.com"
                         });
