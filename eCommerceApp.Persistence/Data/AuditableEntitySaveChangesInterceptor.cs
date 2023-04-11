@@ -40,12 +40,12 @@ namespace eCommerceApp.Persistence.Data
             foreach (var entry in changedEntities)
             {
                 entry.Entity.LastModifiedDate = _dateTimeService.Now;
-                entry.Entity.LastModifiedBy = _currentUserService.UserName;
+                entry.Entity.LastModifiedBy = _currentUserService.UserId.ToString();
 
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedDate = _dateTimeService.Now;
-                    entry.Entity.CreatedBy = _currentUserService.UserName;
+                    entry.Entity.CreatedBy = _currentUserService.UserId.ToString();
                 }
             }
         }

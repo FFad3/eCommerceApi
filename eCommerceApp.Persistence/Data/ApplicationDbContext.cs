@@ -26,7 +26,10 @@ namespace eCommerceApp.Persistence.Data
             configurationBuilder.Properties<string>().HaveColumnType("nvarchar(200)");
             configurationBuilder.Properties<decimal>().HavePrecision(14, 2);
         }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            options.AddInterceptors(_auditableEntitySaveChangesInterceptor);
+        }
         #region DbSets
 
         public DbSet<Category> Categories { get; set; }
