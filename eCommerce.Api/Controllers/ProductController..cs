@@ -18,7 +18,6 @@ namespace eCommerce.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Get([FromQuery] GetProductPageQuery query)
         {
             var result = await _mediator.Send(query);

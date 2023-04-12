@@ -102,7 +102,7 @@ namespace eCommerceApp.Identity.Services
 
             var principal = GetPrincipalFromExpiredToken(tokensPairModel.AccessToken) ?? throw new SecurityTokenException("Invalid access token or refresh token");
 
-            string userId = principal.FindFirstValue("uid") ?? throw new ArgumentNullException("Was null during RefreshToken method", nameof(userId));
+            string userId = principal.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier) ?? throw new ArgumentNullException("Was null during RefreshToken method", nameof(userId));
 
             var user = await _userManager.FindByIdAsync(userId);
 
