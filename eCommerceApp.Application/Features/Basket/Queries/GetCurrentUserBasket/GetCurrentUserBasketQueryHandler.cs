@@ -24,7 +24,7 @@ namespace eCommerceApp.Application.Features.Basket.Queries.GetCurrentUserBasket
         public async Task<BasketDto> Handle(GetCurrentUserBasketQuery request, CancellationToken cancellationToken)
         {
             var _user = _currentUserService.UserId;
-            var basket = await _unitOfWork.Basket.FindSingleAsync(x=>x.UserId==_user && !x.IsRemoved, cancellationToken);
+            var basket = await _unitOfWork.Basket.RetriveBasketWithItemsAsync(x=>x.UserId==_user && !x.IsRemoved, cancellationToken);
             //Creates new basket if no exist
             if(basket == null)
             {
