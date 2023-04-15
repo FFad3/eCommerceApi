@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using eCommerceApp.Application.Features.Basket.Queries.GetBasketPage;
+using eCommerceApp.Application.Features.Basket.Queries.GetCurrentUserBasket;
 
 namespace eCommerceApp.Application.MappingProfiles
 {
-    public class BasketProfile : Profile
+    public class BasketProfile :Profile
     {
         public BasketProfile()
         {

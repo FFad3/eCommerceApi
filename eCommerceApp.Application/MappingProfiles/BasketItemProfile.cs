@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using eCommerceApp.Application.Features.Basket.Queries.GetBasketPage;
-using eCommerceApp.Application.Features.BasketItem.Queries.GetBasketItems;
+using eCommerceApp.Application.Features.Basket.Queries.GetCurrentUserBasket;
 
 namespace eCommerceApp.Application.MappingProfiles
 {
@@ -8,7 +7,6 @@ namespace eCommerceApp.Application.MappingProfiles
     {
         public BasketItemProfile()
         {
-            CreateMap<Domain.BasketItem, BasketDto.BasketItemDto>();
             CreateMap<Domain.BasketItem, BasketItemDto>();
         }
     }
