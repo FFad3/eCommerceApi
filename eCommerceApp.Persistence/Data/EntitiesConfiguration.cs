@@ -135,19 +135,19 @@ namespace eCommerceApp.Persistence.Data
         }
     }
 
-    internal class BasketConfiguration : IEntityTypeConfiguration<Basket>
+    internal class CartConfiguration : IEntityTypeConfiguration<Cart>
     {
-        public void Configure(EntityTypeBuilder<Basket> builder)
+        public void Configure(EntityTypeBuilder<Cart> builder)
         {
-            builder.HasMany(e => e.Items).WithOne(e => e.Basket).OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(e => e.Items).WithOne(e => e.Cart).OnDelete(DeleteBehavior.NoAction);
         }
     }
 
-    internal class BasketItemConfiguration : IEntityTypeConfiguration<BasketItem>
+    internal class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
     {
-        public void Configure(EntityTypeBuilder<BasketItem> builder)
+        public void Configure(EntityTypeBuilder<CartItem> builder)
         {
-            builder.HasOne(e => e.Basket).WithMany(e => e.Items).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(e => e.Cart).WithMany(e => e.Items).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

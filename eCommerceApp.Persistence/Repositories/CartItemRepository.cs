@@ -4,9 +4,9 @@ using eCommerceApp.Persistence.Data;
 
 namespace eCommerceApp.Persistence.Repositories
 {
-    public class BasketItemRepository : GenericRepository<BasketItem>, IBasketItemRepository
+    public class CartItemRepository : GenericRepository<CartItem>, ICartItemRepository
     {
-        public BasketItemRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public CartItemRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }

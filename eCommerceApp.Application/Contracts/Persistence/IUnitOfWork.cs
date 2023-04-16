@@ -18,9 +18,9 @@ namespace eCommerceApp.Application.Contracts.Persistence
         IProductRepository Product { get; }
 
         /// <summary>
-        /// Gets BasketRepository
+        /// Gets CartRepository
         /// </summary>
-        IBasketRepository Basket { get; }
+        ICartRepository Cart { get; }
 
         /// <summary>
         /// Gets OrderRepository
@@ -28,9 +28,9 @@ namespace eCommerceApp.Application.Contracts.Persistence
         IOrderRepository Order { get; }
 
         /// <summary>
-        /// Gets BasketItemRepository
+        /// Gets CartItemRepository
         /// </summary>
-        IBasketItemRepository BasketItem { get; }
+        ICartItemRepository CartItem { get; }
 
         /// <summary>
         /// Save changes asynchronusly

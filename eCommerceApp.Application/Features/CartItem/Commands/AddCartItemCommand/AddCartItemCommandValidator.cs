@@ -1,13 +1,13 @@
 ﻿using eCommerceApp.Application.Contracts.Persistence;
 using FluentValidation;
 
-namespace eCommerceApp.Application.Features.BasketItem.Commands.AddBasketItemCommand
+namespace eCommerceApp.Application.Features.CartItem.Commands.AddCartItemCommand
 {
-    public class AddBasketItemCommandValidator : AbstractValidator<AddBasketItemCommand>
+    public class AddCartItemCommandValidator : AbstractValidator<AddCartItemCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddBasketItemCommandValidator(IUnitOfWork unitOfWork)
+        public AddCartItemCommandValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
 
@@ -18,7 +18,7 @@ namespace eCommerceApp.Application.Features.BasketItem.Commands.AddBasketItemCom
                 .MustAsync(ProductExist).WithMessage("Product doesn't exist");
         }
 
-        private async Task<bool> ProductExist(AddBasketItemCommand command, CancellationToken token)
+        private async Task<bool> ProductExist(AddCartItemCommand command, CancellationToken token)
         {
             var result = await _unitOfWork.Product.IsExist(x => x.Id == command.ItemId && !x.IsRemoved, token);
             return result;

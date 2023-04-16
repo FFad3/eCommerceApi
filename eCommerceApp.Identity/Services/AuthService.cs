@@ -61,6 +61,7 @@ namespace eCommerceApp.Identity.Services
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 RefreshToken = refreshToken,
+                Email = user?.Email,
                 Role = role,
                 Expiration = token.ValidTo
             };
@@ -126,6 +127,7 @@ namespace eCommerceApp.Identity.Services
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
                 RefreshToken = newRefreshToken,
+                Email= user?.Email,
                 Role = role,
                 Expiration = DateTime.Now.AddDays(_jwtSettings.RefreshTokenValidityInDays),
             };

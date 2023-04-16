@@ -2,7 +2,7 @@
 
 namespace eCommerceApp.Application.Contracts.Persistence.Repositories
 {
-    public interface IBasketItemRepository : IGenericRepository<BasketItem>
+    public interface ICartItemRepository : IGenericRepository<CartItem>
     {
     }
 }

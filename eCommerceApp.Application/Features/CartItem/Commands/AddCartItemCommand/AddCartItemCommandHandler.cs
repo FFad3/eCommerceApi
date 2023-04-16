@@ -2,38 +2,38 @@
 using eCommerceApp.Application.Contracts.Persistence;
 using MediatR;
 
-namespace eCommerceApp.Application.Features.BasketItem.Commands.AddBasketItemCommand
+namespace eCommerceApp.Application.Features.CartItem.Commands.AddCartItemCommand
 {
-    public class AddBasketItemCommandHandler : IRequestHandler<AddBasketItemCommand, Unit>
+    public class AddCartItemCommandHandler : IRequestHandler<AddCartItemCommand, Unit>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICurrentUserService _currentUserService;
 
-        public AddBasketItemCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+        public AddCartItemCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
         {
             _unitOfWork = unitOfWork;
             _currentUserService = currentUserService;
         }
 
-        public async Task<Unit> Handle(AddBasketItemCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddCartItemCommand request, CancellationToken cancellationToken)
         {
             var user = _currentUserService.UserId;
             var item = await _unitOfWork.Product.FindSingleAsync(x => x.Id == request.ItemId && !x.IsRemoved, cancellationToken);
-            var basket = await _unitOfWork.Basket.FindSingleAsync(x => x.UserId == user && !x.IsRemoved, cancellationToken);
+            var cart = await _unitOfWork.Cart.FindSingleAsync(x => x.UserId == user && !x.IsRemoved, cancellationToken);
 
-            if (item == null || basket == null)
+            if (item == null || cart == null)
                 return Unit.Value;
 
-            var newBasketItem = new Domain.BasketItem()
+            var newCartItem = new Domain.CartItem()
             {
-                BasketId = basket.Id,
+                CartId = cart.Id,
                 ProductId = item.Id,
                 ProductName = item.Name,
                 UnitPrice = item.Price,
                 Quantity = request.Quantity,
             };
 
-            await _unitOfWork.BasketItem.CreateAsync(newBasketItem, cancellationToken);
+            await _unitOfWork.CartItem.CreateAsync(newCartItem, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }

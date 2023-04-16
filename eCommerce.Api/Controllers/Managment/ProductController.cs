@@ -1,6 +1,8 @@
 ﻿using eCommerceApp.Application.Features.Product.Commands.CreateProduct;
 using eCommerceApp.Application.Features.Product.Commands.UpdateProduct;
+using eCommerceApp.Identity.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Api.Controllers.Managment
@@ -18,6 +20,7 @@ namespace eCommerce.Api.Controllers.Managment
         }
 
         [HttpPost]
+        [Authorize(Roles = IdentityDbPopulateConstants.Admin)]
         public async Task<IActionResult> Create(CreateProductCommand command)
         {
             var result = await _mediator.Send(command);
@@ -25,6 +28,7 @@ namespace eCommerce.Api.Controllers.Managment
         }
 
         [HttpPatch]
+        [Authorize(Roles = IdentityDbPopulateConstants.Admin)]
         public async Task<IActionResult> Update(UpdateProductCommand command)
         {
             var result = await _mediator.Send(command);
