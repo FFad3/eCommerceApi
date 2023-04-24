@@ -2,7 +2,9 @@
 using eCommerceApp.Application.Features.Category.Commands.UpdateCategory;
 using eCommerceApp.Application.Features.Category.Queries.GetAllCategories;
 using eCommerceApp.Application.Features.Category.Queries.GetSingleCategory;
+using eCommerceApp.Identity.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Api.Controllers.Managment
@@ -20,6 +22,7 @@ namespace eCommerce.Api.Controllers.Managment
         }
 
         [HttpGet]
+        [Authorize(Roles = IdentityDbPopulateConstants.Admin)]
         public async Task<IActionResult> Categories([FromQuery] bool ShowRemoved = false)
         {
             var result = await _mediator.Send(new GetAllCategoriesQuery(ShowRemoved));
@@ -34,6 +37,7 @@ namespace eCommerce.Api.Controllers.Managment
         }
 
         [HttpPost]
+        [Authorize(Roles = IdentityDbPopulateConstants.Admin)]
         public async Task<IActionResult> Create(CreateCategoryCommand command)
         {
             var result = await _mediator.Send(command);
@@ -41,6 +45,7 @@ namespace eCommerce.Api.Controllers.Managment
         }
 
         [HttpPatch]
+        [Authorize(Roles = IdentityDbPopulateConstants.Admin)]
         public async Task<IActionResult> Update(UpdateCategoryCommand command)
         {
             var result = await _mediator.Send(command);
