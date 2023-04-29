@@ -16,7 +16,7 @@ namespace eCommerceApp.Infrastructure.Services
 
         public string UserName => this._httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(c=>c.Type== JwtRegisteredClaimNames.Name)?.Value ?? throw new SecurityTokenException("Incorrect Token");
 
-        public Guid UserId => Guid.TryParse(this._httpContextAccessor?.HttpContext?.User?.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value, out var userId) 
+        public Guid UserId => Guid.TryParse(this._httpContextAccessor?.HttpContext?.User?.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value?.ToUpper(), out var userId) 
             ? userId : throw new SecurityTokenException("Incorrect Token");
 
     }

@@ -8,6 +8,13 @@ namespace eCommerceApp.Application.MappingProfiles
         public CartItemProfile()
         {
             CreateMap<Domain.CartItem, CartItemDto>();
+            CreateMap<Domain.CartItem, Domain.OrderItem>()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.IsRemoved, opt => opt.Ignore())
+                .ForMember(x => x.CreatedDate, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.LastModifiedDate, opt => opt.Ignore())
+                .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
         }
     }
 }

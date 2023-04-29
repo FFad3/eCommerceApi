@@ -123,7 +123,7 @@ namespace eCommerceApp.Persistence.Data
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.HasMany(e => e.Items).WithOne(e => e.Order).OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(e => e.Items).WithOne(e => e.Order).OnDelete(DeleteBehavior.Cascade);
         }
     }
 
@@ -131,7 +131,7 @@ namespace eCommerceApp.Persistence.Data
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            builder.HasOne(e => e.Order).WithMany(e => e.Items).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(e => e.Order).WithMany(e => e.Items).OnDelete(DeleteBehavior.Cascade);
         }
     }
 
@@ -147,7 +147,7 @@ namespace eCommerceApp.Persistence.Data
     {
         public void Configure(EntityTypeBuilder<CartItem> builder)
         {
-            builder.HasOne(e => e.Cart).WithMany(e => e.Items).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(e => e.Cart).WithMany(e => e.Items).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
