@@ -6,7 +6,7 @@ namespace eCommerceApp.Application.Features.Order.Commands.PlaceOrderCommand
     {
         public PlaceOrderCommandValidator()
         {
-            RuleFor(x => x.Id).NotNull().WithMessage("{propertyName} is required");
+            RuleFor(x => x.cartId).NotNull().WithMessage("{propertyName} is required");
         }
     }
 }

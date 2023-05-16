@@ -24,17 +24,10 @@ namespace eCommerceApp.Application.Features.Order.Commands.PlaceOrderCommand
         public async Task<Unit> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
         {
             var userId = _currentUserService.UserId;
-            var basket = await _unitOfWork.Cart.RetriveCartWithItemsAsync(c=>c.Id==request.Id&&c.UserId==userId,cancellationToken)
+            var basket = await _unitOfWork.Cart.RetriveCartWithItemsAsync(c=>c.Id==request.cartId&&c.UserId==userId,cancellationToken)
                 ?? throw new NotFoundException("Cart doesn't exist");
 
             var order = _mapper.Map<Domain.Order>(basket);
-            //    = new Domain.Order
-            //{
-            //    OrderDate = _dateService.Now,
-            //    Items = _mapper.Map<IList<Domain.OrderItem>>(basket.Items),
-            //    UserId = userId,
-            //};
-
 
             if (order != null)
             {
