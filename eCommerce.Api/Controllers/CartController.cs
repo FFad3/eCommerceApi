@@ -7,6 +7,7 @@ namespace eCommerce.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CartController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -17,7 +18,6 @@ namespace eCommerce.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Cart()
         {
             return Ok(await _mediator.Send(new GetCurrentUserCartQuery()));

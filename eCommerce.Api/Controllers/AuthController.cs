@@ -15,6 +15,7 @@ namespace eCommerce.Api.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<AuthController> _logger;
+
         public AuthController(IMediator mediator, ILogger<AuthController> logger)
         {
             _mediator = mediator;
@@ -70,13 +71,12 @@ namespace eCommerce.Api.Controllers
             });
         }
 
-        private void SetTokens(string access,string refresh)
+        private void SetTokens(string access, string refresh)
         {
             Response.Cookies.Append(JwtTokensNames.AccessToken, access, new CookieOptions
             {
                 HttpOnly = true,
                 Secure = true,
-
             });
             Response.Cookies.Append(JwtTokensNames.RefreshToken, refresh, new CookieOptions
             {

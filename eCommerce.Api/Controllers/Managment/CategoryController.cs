@@ -12,6 +12,7 @@ namespace eCommerce.Api.Controllers.Managment
     [Route("api/[area]/[controller]")]
     [Area("Managment")]
     [ApiController]
+    [Authorize(Roles = IdentityDbPopulateConstants.Admin)]
     public class CategoryController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,7 +23,6 @@ namespace eCommerce.Api.Controllers.Managment
         }
 
         [HttpGet]
-        [Authorize(Roles = IdentityDbPopulateConstants.Admin)]
         public async Task<IActionResult> Categories([FromQuery] bool ShowRemoved = false)
         {
             var result = await _mediator.Send(new GetAllCategoriesQuery(ShowRemoved));
@@ -37,7 +37,6 @@ namespace eCommerce.Api.Controllers.Managment
         }
 
         [HttpPost]
-        [Authorize(Roles = IdentityDbPopulateConstants.Admin)]
         public async Task<IActionResult> Create(CreateCategoryCommand command)
         {
             var result = await _mediator.Send(command);
@@ -45,7 +44,6 @@ namespace eCommerce.Api.Controllers.Managment
         }
 
         [HttpPatch]
-        [Authorize(Roles = IdentityDbPopulateConstants.Admin)]
         public async Task<IActionResult> Update(UpdateCategoryCommand command)
         {
             var result = await _mediator.Send(command);

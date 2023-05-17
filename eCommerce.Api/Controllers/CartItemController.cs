@@ -8,7 +8,8 @@ namespace eCommerce.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CartItemController:ControllerBase
+    [Authorize]
+    public class CartItemController : ControllerBase
     {
         private readonly IMediator _mediator;
 
@@ -18,7 +19,6 @@ namespace eCommerce.Api.Controllers
         }
 
         [HttpPost("add-item")]
-        [Authorize]
         public async Task<IActionResult> AddItem(AddCartItemCommand command)
         {
             var result = await _mediator.Send(command);
@@ -26,7 +26,6 @@ namespace eCommerce.Api.Controllers
         }
 
         [HttpPost("remove-item")]
-        [Authorize]
         public async Task<IActionResult> RemoveItem(RemoveCartItemCommand command)
         {
             var result = await _mediator.Send(command);
