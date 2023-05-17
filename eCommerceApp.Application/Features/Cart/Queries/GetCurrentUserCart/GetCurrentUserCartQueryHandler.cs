@@ -13,7 +13,7 @@ namespace eCommerceApp.Application.Features.Cart.Queries.GetCurrentUserCart
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<GetCurrentUserCartQueryHandler> _logger;
 
-        public GetCurrentUserCartQueryHandler(ICurrentUserService currentUserService, IMapper mapper, IUnitOfWork unitOfWork, ILogger<GetCurrentUserCartQueryHandler> logger = null)
+        public GetCurrentUserCartQueryHandler(ICurrentUserService currentUserService, IMapper mapper, IUnitOfWork unitOfWork, ILogger<GetCurrentUserCartQueryHandler> logger)
         {
             _currentUserService = currentUserService;
             _mapper = mapper;
