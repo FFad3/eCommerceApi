@@ -25,7 +25,7 @@ namespace eCommerce.Api.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
-        [HttpGet("orders")]
+        [HttpGet]
         public async Task<IActionResult> GetUserOrderList()
         {
             var result = await _mediator.Send(new GetUserOrdersQuery());
