@@ -1,13 +1,13 @@
 ﻿namespace eCommerceApp.Application.Features.Category.Queries.GetSingleCategory
 {
-    public class CategoryWithProductsDto
+    public record CategoryWithProductsDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public IEnumerable<CategoryProductDto> Products { get; set; } = new List<CategoryProductDto>();
         public int ProductsCount { get; set; } = 0;
 
-        public class CategoryProductDto
+        public record CategoryProductDto
         {
             public int Id { get; set; }
             public string Name { get; set; } = string.Empty;

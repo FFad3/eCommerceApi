@@ -1,6 +1,6 @@
 ﻿namespace eCommerceApp.Application.Features.Order.Queries.GetOrderPage
 {
-    public class OrderDto
+    public record OrderDto
     {
         public int Id { get; set; }
 
@@ -12,7 +12,7 @@
         public ICollection<OrderItemDto> Items { get; set; }
         public DateTime OrderDate { get; set; }
 
-        public class OrderItemDto
+        public record OrderItemDto
         {
             public int Id { get; set; }
             public int OrderId { get; set; }

@@ -19,22 +19,24 @@ namespace eCommerce.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("confirm")]        
+        [HttpPost("confirm")]
         public async Task<IActionResult> RemoveItem(PlaceOrderCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
         [HttpGet]
         public async Task<IActionResult> GetUserOrderList()
         {
             var result = await _mediator.Send(new GetUserOrdersQuery());
             return Ok(result);
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserOrderDetails(int id)
         {
-            var result = await _mediator.Send(new GetUserOrderDetailsQuery { Id=id});
+            var result = await _mediator.Send(new GetUserOrderDetailsQuery { Id = id });
             return Ok(result);
         }
     }

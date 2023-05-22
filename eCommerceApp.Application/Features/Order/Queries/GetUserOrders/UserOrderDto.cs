@@ -1,6 +1,6 @@
 ﻿namespace eCommerceApp.Application.Features.Order.Queries.GetUserOrders
 {
-    public class UserOrderDto
+    public record UserOrderDto
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }

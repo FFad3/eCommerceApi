@@ -1,6 +1,6 @@
 ﻿namespace eCommerceApp.Application.Features.Product.Queries.GetSingleProduct
 {
-    public class ProductDto
+    public record ProductDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -9,7 +9,7 @@
         public string Description { get; set; } = string.Empty;
         public string ImgUrl { get; set; } = string.Empty;
 
-        public class ProductCategoryDto
+        public record ProductCategoryDto
         {
             public int Id { get; set; }
             public string Name { get; set; } = string.Empty;

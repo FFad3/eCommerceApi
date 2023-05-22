@@ -1,6 +1,6 @@
 ﻿namespace eCommerceApp.Application.Features.Cart.Queries.GetCurrentUserCart
 {
-    public class CartItemDto
+    public record CartItemDto
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

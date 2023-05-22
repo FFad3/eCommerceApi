@@ -1,6 +1,6 @@
 ﻿namespace eCommerceApp.Application.Features.Cart.Queries.GetCurrentUserCart
 {
-    public class CartDto
+    public record CartDto
     {
         public int Id { get; set; }
         public IEnumerable<CartItemDto> Items { get; set; } = new List<CartItemDto>();
