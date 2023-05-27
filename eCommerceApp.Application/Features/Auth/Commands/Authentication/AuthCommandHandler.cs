@@ -13,7 +13,7 @@ namespace eCommerceApp.Application.Features.Auth.Commands.Authentication
             _authService = authService;
         }
 
-        public async Task<AuthResponse> Handle(AuthCommand request, CancellationToken cancellationToken)
+        public async Task<AuthResponse?> Handle(AuthCommand request, CancellationToken cancellationToken)
         {
             var result = await _authService.Login(request);
             return result;

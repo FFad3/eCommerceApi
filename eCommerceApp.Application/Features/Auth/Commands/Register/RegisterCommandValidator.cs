@@ -23,6 +23,9 @@ namespace eCommerceApp.Application.Features.Auth.Commands.Register
 
             RuleFor(x => x.LastName)
             .NotEmpty().WithMessage("{PropertyName} is required");
+
+            RuleFor(x => x.ConfirmationUrl)
+                 .NotEmpty().WithMessage("{PropertyName} is required");
         }
     }
 }

@@ -17,5 +17,7 @@ namespace eCommerceApp.Application.Features.Auth.Commands.Register
         public string UserName { get; set; } = null!;
 
         public string Password { get; set; } = null!;
+
+        public string ConfirmationUrl { get; set; } = null!;
     }
 }

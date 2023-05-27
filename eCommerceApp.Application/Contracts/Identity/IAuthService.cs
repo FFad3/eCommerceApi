@@ -1,4 +1,5 @@
 ﻿using eCommerceApp.Application.Features.Auth.Commands.Authentication;
+using eCommerceApp.Application.Features.Auth.Commands.ConfirmEmail;
 using eCommerceApp.Application.Features.Auth.Commands.Refresh;
 using eCommerceApp.Application.Features.Auth.Commands.Register;
 using eCommerceApp.Application.Models.Identity;
@@ -25,5 +26,12 @@ namespace eCommerceApp.Application.Contracts.Identity
         /// <param name="request"></param>
         /// <returns></returns>
         Task<AuthResponse> RefreshToken(RefreshTokenCommand request);
+        /// <summary>
+        /// Confirm email adress
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        Task<bool> ConfirmEmail(ConfirmEmailCommand request);
     }
 }

@@ -5,12 +5,14 @@ using System.Text;
 using eCommerceApp.Application.Contracts.Identity;
 using eCommerceApp.Application.Exceptions;
 using eCommerceApp.Application.Features.Auth.Commands.Authentication;
+using eCommerceApp.Application.Features.Auth.Commands.ConfirmEmail;
 using eCommerceApp.Application.Features.Auth.Commands.Refresh;
 using eCommerceApp.Application.Features.Auth.Commands.Register;
 using eCommerceApp.Application.Models.Identity;
 using eCommerceApp.Application.Models.Settings;
 using eCommerceApp.Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -21,19 +23,22 @@ namespace eCommerceApp.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JwtSettings _jwtSettings;
+        private readonly ILogger<AuthService> _logger;
 
         public AuthService(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IOptions<JwtSettings> jwtSettings)
+            IOptions<JwtSettings> jwtSettings,
+            ILogger<AuthService> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtSettings = jwtSettings.Value;
+            _logger = logger;
         }
 
         public async Task<AuthResponse?> Login(AuthCommand request)
         {
-            if(request.Email is null || request.Password is null) throw new BadRequestException($"Incorrect Credentials");
+            if (request.Email is null || request.Password is null) throw new BadRequestException($"Incorrect Credentials");
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             _ = user ?? throw new NotFoundException($"User with {request.Email} not found.");
@@ -77,7 +82,7 @@ namespace eCommerceApp.Identity.Services
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 UserName = request.UserName,
-                EmailConfirmed = true,
+                EmailConfirmed = false,
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -92,14 +97,23 @@ namespace eCommerceApp.Identity.Services
                 }
                 throw new BadRequestException($"{sb}");
             }
-
-            await _userManager.AddToRoleAsync(user, IdentityDbPopulateConstants.User);
-            return new RegistrationResponse() { UserId = user.Id };
+            try
+            {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                await _userManager.AddToRoleAsync(user, IdentityDbPopulateConstants.User);
+                var response = new RegistrationResponse() { Email = user.Email, UserId = user.Id, Token = token };
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical(e, "HGW?");
+                throw;
+            }
         }
 
         public async Task<AuthResponse> RefreshToken(RefreshTokenCommand tokensPairModel)
         {
-            if(tokensPairModel.RefreshToken is null || tokensPairModel.AccessToken is null) throw new SecurityTokenException("Invalid access token or refresh token");
+            if (tokensPairModel.RefreshToken is null || tokensPairModel.AccessToken is null) throw new SecurityTokenException("Invalid access token or refresh token");
 
             var principal = GetPrincipalFromExpiredToken(tokensPairModel.AccessToken) ?? throw new SecurityTokenException("Invalid access token or refresh token");
 
@@ -127,7 +141,7 @@ namespace eCommerceApp.Identity.Services
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
                 RefreshToken = newRefreshToken,
-                Email= user?.Email,
+                Email = user?.Email,
                 Role = role,
                 Expiration = DateTime.Now.AddDays(_jwtSettings.RefreshTokenValidityInDays),
             };
@@ -196,7 +210,7 @@ namespace eCommerceApp.Identity.Services
                 var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
 
                 if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                    throw new Exception();
+                    throw new SecurityTokenException("Invalid token");
 
                 return principal;
             }
@@ -204,6 +218,16 @@ namespace eCommerceApp.Identity.Services
             {
                 throw new SecurityTokenException("Invalid token", ex);
             }
+        }
+
+        public async Task<bool> ConfirmEmail(ConfirmEmailCommand request)
+        {
+            var user = await _userManager.FindByIdAsync(request.UserId)
+                ?? throw new NotFoundException("User", request.UserId);
+
+            var result = await _userManager.ConfirmEmailAsync(user, request.Token);
+
+            return result.Succeeded;
         }
     }
 }

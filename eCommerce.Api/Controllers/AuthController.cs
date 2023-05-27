@@ -1,6 +1,9 @@
-﻿using eCommerceApp.Application.Features.Auth.Commands.Authentication;
+﻿using eCommerceApp.Application.Contracts.Infrastructure;
+using eCommerceApp.Application.Features.Auth.Commands.Authentication;
+using eCommerceApp.Application.Features.Auth.Commands.ConfirmEmail;
 using eCommerceApp.Application.Features.Auth.Commands.Refresh;
 using eCommerceApp.Application.Features.Auth.Commands.Register;
+using eCommerceApp.Application.Models.Email;
 using eCommerceApp.Application.Models.Identity;
 using eCommerceApp.Application.Models.Settings;
 using MediatR;
@@ -15,11 +18,12 @@ namespace eCommerce.Api.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<AuthController> _logger;
-
-        public AuthController(IMediator mediator, ILogger<AuthController> logger)
+        private readonly IEmailService _emailService;
+        public AuthController(IMediator mediator, ILogger<AuthController> logger, IEmailService emailService)
         {
             _mediator = mediator;
             _logger = logger;
+            _emailService = emailService;
         }
 
         [AllowAnonymous]
@@ -37,9 +41,26 @@ namespace eCommerce.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<ActionResult<RegistrationResponse>> Register(RegisterCommand request)
+        public async Task<IActionResult> Register(RegisterCommand request)
         {
-            return Ok(await _mediator.Send(request));
+            var result = await _mediator.Send(request);
+
+
+            var message = new EmailMessage
+            {
+                To = result.Email,
+                Subject = "ECommerceShopEmailConfirmation",
+                Body = $"{request.ConfirmationUrl}?{result.ToUrlParams}"
+            };
+            await _emailService.SendEmail(message);
+            return Ok();
+        }
+        [AllowAnonymous]
+        [HttpGet("confirm")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery]ConfirmEmailCommand request)
+        {
+            var result = await _mediator.Send(request);
+            return result ? Ok(result) : BadRequest();
         }
 
         [Authorize]

@@ -25,6 +25,9 @@ namespace eCommerceApp.Application.Models.Identity
 
     public class RegistrationResponse
     {
-        public string? UserId { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
+        public string Token { get; set; } = string.Empty;
+        public string ToUrlParams => $"userid={UserId}&token={Token}";
     }
 }

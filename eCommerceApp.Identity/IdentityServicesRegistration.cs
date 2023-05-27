@@ -24,7 +24,9 @@ namespace eCommerceApp.Identity
                 options.UseSqlServer(conn);
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt=>
+                opt.SignIn.RequireConfirmedEmail = true
+            )
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
