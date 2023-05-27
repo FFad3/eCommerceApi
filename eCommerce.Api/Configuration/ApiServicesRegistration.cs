@@ -1,6 +1,8 @@
 ﻿using eCommerceApp.Application;
+using eCommerceApp.Application.Contracts.Infrastructure;
 using eCommerceApp.Identity;
 using eCommerceApp.Infrastructure;
+using eCommerceApp.Infrastructure.Services;
 using eCommerceApp.Persistence;
 
 namespace eCommerce.Api.Configuration
@@ -15,7 +17,7 @@ namespace eCommerce.Api.Configuration
             services.AddSwagger();
 
             services.AddHttpContextAccessor();
-
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.RegisterSettings(configuration);
             services.RegisterApplication();
             services.RegisterInfrastructure(configuration);

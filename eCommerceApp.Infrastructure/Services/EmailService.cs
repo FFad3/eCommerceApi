@@ -1,5 +1,6 @@
 ﻿using eCommerceApp.Application.Contracts.Infrastructure;
 using eCommerceApp.Application.Models.Email;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -9,11 +10,13 @@ namespace eCommerceApp.Infrastructure.Services
 {
     public class EmailService : IEmailService
     {
-        public readonly EmailSettings EmailSettings;
+        private readonly EmailSettings EmailSettings;
+        private readonly ILogger<EmailService> _logger;
 
-        public EmailService(IOptions<EmailSettings> emailSettings)
+        public EmailService(IOptions<EmailSettings> emailSettings, ILogger<EmailService> logger)
         {
             EmailSettings = emailSettings.Value;
+            _logger = logger;
         }
 
         public async Task<bool> SendEmail(EmailMessage email)
@@ -31,9 +34,17 @@ namespace eCommerceApp.Infrastructure.Services
             };
 
             var message = MailHelper.CreateSingleEmail(from, to, email.Subject, email.Body, email.Body);
-            Console.WriteLine(JsonSerializer.Serialize(message));
-            var response = await client.SendEmailAsync(message);
-            return response.IsSuccessStatusCode;
+
+            message.SetClickTracking(false, false);
+
+            var responseStatus = (await client.SendEmailAsync(message)).IsSuccessStatusCode;
+
+            if (responseStatus)
+            {
+                _logger.LogInformation($"Email send: {JsonSerializer.Serialize(message)}");
+            }
+
+            return responseStatus;
         }
     }
 }

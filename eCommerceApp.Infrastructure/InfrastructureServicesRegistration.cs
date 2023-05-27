@@ -10,8 +10,7 @@ namespace eCommerceApp.Infrastructure
     {
         public static IServiceCollection RegisterInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IDateTimeService, DateTimeService>();
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddTransient<IDateTimeService, DateTimeService>();          
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
             services.AddTransient<IEmailService, EmailService>();

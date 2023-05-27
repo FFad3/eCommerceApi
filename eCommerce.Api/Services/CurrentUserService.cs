@@ -1,5 +1,4 @@
 ﻿using eCommerceApp.Application.Contracts.Infrastructure;
-using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
