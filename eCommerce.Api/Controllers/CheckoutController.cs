@@ -42,7 +42,7 @@ namespace eCommerce.Api.Controllers
                             {
                                 Name = product.ProductName,
                             },
-                            Currency = "usd", // Replace with your currency code
+                            Currency = "pln", // Replace with your currency code
                             UnitAmount = (long)(product.UnitPrice * 100), // Convert decimal price to the lowest currency unit
                         },
                         Quantity = product.Quantity,
