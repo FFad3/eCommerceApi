@@ -2,6 +2,7 @@ using eCommerce.Api.Configuration;
 using eCommerce.Api.Middleware;
 using NLog;
 using NLog.Web;
+using Stripe;
 using System.Net;
 
 namespace eCommerce.Api
@@ -27,6 +28,8 @@ namespace eCommerce.Api
                 builder.Logging.ClearProviders();
                 builder.Host.UseNLog();
 
+                StripeConfiguration.ApiKey = "sk_test_51O9UszJOgHbZ9H6uKVn45EsMvilIdR8suc7V5VPMFTJijXync7S8ocTEu72CzLtkMrukNNrpKaj2qeGXTm5F5DFt00XoTaQlzA";
+
                 //Configure dependencies
                 builder.Services.RegisterServices(builder.Configuration);
                 bool isDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
@@ -40,7 +43,7 @@ namespace eCommerce.Api
                             options.HttpsPort = port;
                         });
                     }
-                }
+                }               
                 var app = builder.Build();
 
                 app.UseMiddleware<ExceptionMiddleware>();
